@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# the repo's own gate. run before every commit: bash scripts/check.sh
+# 1. no private strings (patterns in .claude/denylist.txt, gitignored, one regex per line, case insensitive; start a line with = to match case)
+# 2. no em dashes
+# 3. every skill has frontmatter with name matching its folder, and a description
+# 4. every relative markdown link resolves
+set -uo pipefail
+cd "$(dirname "$0")/.."
+fail=0
+files=$( (git ls-files; git ls-files --others --exclude-standard) | grep -v '^\.claude/' | sort -u)
+
+if [ -f .claude/denylist.txt ]; then
+  while IFS= read -r pat; do
+    case "$pat" in ''|'#'*) continue ;; esac
+    flags=-nIiE
+    case "$pat" in =*) pat="${pat#=}"; flags=-nIE ;; esac
+    hits=$(printf '%s\n' "$files" | xargs grep $flags -- "$pat" 2>/dev/null)
+    if [ -n "$hits" ]; then echo "deny /$pat/:"; echo "$hits" | head -20; fail=1; fi
+  done < .claude/denylist.txt
+fi
+
+dash=$(printf '\342\200\224')
+hits=$(printf '%s\n' "$files" | xargs grep -nI -- "$dash" 2>/dev/null)
+[ -n "$hits" ] && { echo "em dash:"; echo "$hits" | head -20; fail=1; }
+
+for f in skills/*/SKILL.md; do
+  [ -f "$f" ] || continue
+  dir=$(basename "$(dirname "$f")")
+  head -1 "$f" | grep -q '^---$' || { echo "$f: no frontmatter"; fail=1; continue; }
+  name=$(awk 'NR>1 && /^---$/{exit} /^name:/{sub(/^name:[ ]*/,""); print}' "$f")
+  [ "$name" = "$dir" ] || { echo "$f: name '$name' does not match folder '$dir'"; fail=1; }
+  awk 'NR>1 && /^---$/{exit} /^description:/{found=1} END{exit !found}' "$f" || { echo "$f: no description"; fail=1; }
+done
+
+for f in $(printf '%s\n' "$files" | grep '\.md$'); do
+  d=$(dirname "$f")
+  for link in $(grep -oE '\]\([^)#[:space:]]+' "$f" | sed 's/^](//' | grep -vE '^(https?:|mailto:|/)'); do
+    [ -e "$d/$link" ] || { echo "$f: broken link $link"; fail=1; }
+  done
+done
+
+[ $fail -eq 0 ] && echo ok
+exit $fail

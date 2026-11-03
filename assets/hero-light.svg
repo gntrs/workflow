@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+<rect width="1200" height="520" rx="16" fill="#ffffff"/>
+<text x="64" y="150" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="64" font-weight="500" letter-spacing="-2.5" fill="#111111">workflow</text>
+<text x="66" y="200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" fill="#555555">one door for every task.</text>
+<text x="66" y="232" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" fill="#555555">claude code skills that plan, build,</text>
+<text x="66" y="264" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="22" fill="#555555">review earlier and stop for your yes.</text>
+<rect x="66" y="330" width="232" height="48" rx="8" fill="#111111"/>
+<text x="182" y="360" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#ffffff">claude, set this up</text>
+<text x="66" y="420" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" fill="#8a8a8a">macos · linux · windows · mit</text>
+<rect x="480" y="48" width="672" height="424" rx="12" fill="#f6f6f4" stroke="rgba(0,0,0,0.08)"/>
+<text x="520" y="92" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#111111" xml:space="preserve">> /cook add a settings page with dark mode</text>
+<text x="520" y="122" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#8a8a8a" xml:space="preserve"></text>
+<text x="520" y="152" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#555555" xml:space="preserve">lane: build, opus high, 2 helpers</text>
+<text x="520" y="182" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#8a8a8a" xml:space="preserve">/goal tests green, sweep 0 overflow, /ship printed. stop.</text>
+<text x="520" y="212" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#8a8a8a" xml:space="preserve"></text>
+<text x="520" y="242" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#555555" xml:space="preserve">plan read cold ............ ok, 2 notes folded in</text>
+<text x="520" y="272" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#555555" xml:space="preserve">builder 1  settings page .. landed, reviewed</text>
+<text x="520" y="302" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#555555" xml:space="preserve">builder 2  theme tokens ... landed, reviewed</text>
+<text x="520" y="332" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#555555" xml:space="preserve">real run, 10 sizes ........ 0 overflow, 0 under 44px</text>
+<text x="520" y="362" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#8a8a8a" xml:space="preserve"></text>
+<text x="520" y="392" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#111111" xml:space="preserve">hand test: 1. open /settings  2. flip the theme  3. reload ...</text>
+<text x="520" y="422" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#111111" xml:space="preserve">/ship  nothing leaves until you say yes.</text>
+</svg>
