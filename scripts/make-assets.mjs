@@ -45,27 +45,27 @@ const MOTION = `.eye{transform-box:fill-box;transform-origin:center;animation:bl
 @media (prefers-reduced-motion:reduce){.eye{animation:none}}`;
 
 function hero(c) {
-  const W = 1200, H = 440;
+  const W = 1200, H = 580;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
 <rect width="${W}" height="${H}" rx="16" fill="${c.bg}"/>
 <style>${FACE}</style>
-<text x="40" y="196" font-size="96" font-weight="500" letter-spacing="-4" fill="${c.t1}">let him /cook<tspan dx="18" font-size="34" font-weight="400" letter-spacing="0" fill="${c.t3}">workflow</tspan></text>
-<text x="44" y="262" font-size="30" fill="${c.t2}">agent skills that plan, build,</text>
-<text x="44" y="304" font-size="30" fill="${c.t2}">review early and stop for your yes.</text>
-${photo(800, 30, 262, 384, 'p')}
+<text x="40" y="266" font-size="96" font-weight="500" letter-spacing="-4" fill="${c.t1}">let him /cook<tspan dx="18" font-size="34" font-weight="400" letter-spacing="0" fill="${c.t3}">workflow</tspan></text>
+<text x="44" y="332" font-size="30" fill="${c.t2}">agent skills that plan, build,</text>
+<text x="44" y="374" font-size="30" fill="${c.t2}">review early and stop for your yes.</text>
+${photo(808, 26, 360, 528, 'p')}
 </svg>`;
 }
 
 function heroPhone(c) {
-  const W = 600, H = 590;
+  const W = 600, H = 710;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
 <rect width="${W}" height="${H}" rx="16" fill="${c.bg}"/>
 <style>${FACE}</style>
-${photo(190, 16, 220, 322, 'p')}
-<text x="300" y="428" text-anchor="middle" font-size="78" font-weight="500" letter-spacing="-3" fill="${c.t1}">let him /cook</text>
-<text x="300" y="464" text-anchor="middle" font-size="26" fill="${c.t3}">workflow</text>
-<text x="300" y="514" text-anchor="middle" font-size="30" fill="${c.t2}">agent skills that plan, build,</text>
-<text x="300" y="554" text-anchor="middle" font-size="30" fill="${c.t2}">review early and stop for your yes.</text>
+${photo(150, 16, 300, 440, 'p')}
+<text x="300" y="546" text-anchor="middle" font-size="78" font-weight="500" letter-spacing="-3" fill="${c.t1}">let him /cook</text>
+<text x="300" y="582" text-anchor="middle" font-size="26" fill="${c.t3}">workflow</text>
+<text x="300" y="632" text-anchor="middle" font-size="30" fill="${c.t2}">agent skills that plan, build,</text>
+<text x="300" y="672" text-anchor="middle" font-size="30" fill="${c.t2}">review early and stop for your yes.</text>
 </svg>`;
 }
 
