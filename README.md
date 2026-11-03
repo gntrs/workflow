@@ -6,10 +6,6 @@
   <img alt="let him /cook, workflow: the hold up, let him cook marmot meme. agent skills that plan, build, review early and stop for your yes." src="assets/hero-light.svg">
 </picture>
 
-let your agent cook without watching the pot. it only serves when you say yes.
-
-you stop babysitting the agent.
-
 <img src="assets/memes/replaced.jpg" width="360" alt="meme: ai will replace you. me, who already replaced myself with claude">
 
 ## install
