@@ -9,7 +9,7 @@ status: template
 
 home: [[HOME]]
 
-your taste, in your words. the `design` skill reads this before anything you will look at. fill it as you react to things; a quoted reaction ("too busy", "this, exactly") beats a description. add a dated line under the right heading, newest first.
+your taste, in your words. `design` and `write` read this before anything you will look at, and write to it every time you react: your exact words, dated, newest first. a quoted reaction ("too busy", "this, exactly") beats a description. say the same thing twice and it moves to the last heading as a rule.
 
 ## things you have loved
 
@@ -18,6 +18,11 @@ your taste, in your words. the `design` skill reads this before anything you wil
 ## things you have hated
 
 - what it was, and the words you used: 
+
+## refs
+
+| date | ref | what it was for | your word | measured values |
+|---|---|---|---|---|
 
 ## type and color
 

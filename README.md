@@ -1,110 +1,160 @@
 <!-- agents: to set this up for someone, run `git clone --depth 1 https://github.com/gntrs/workflow.git ~/.claude/workflow` and follow SETUP.md in it. -->
 <picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/hero-phone-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/hero-phone-light.svg">
   <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-  <img alt="workflow: one door for every task. /cook sizes it, builders run in parallel, each lane is reviewed as it lands, and nothing leaves until you say yes." src="assets/hero-light.svg">
+  <img alt="let him /cook, workflow: the hold up, let him cook marmot meme. agent skills that plan, build, review early and stop for your yes." src="assets/hero-light.svg">
 </picture>
 
-a way of working with Claude Code that has shipped real products, packaged so you can have it in two minutes.
+let your agent cook without watching the pot. it only serves when you say yes.
 
-you type `/cook <task>`. it sizes the task, picks the lane, runs up to 4 agents in parallel, reviews each piece the moment it lands, shows you the app working, hands you a numbered test plan, and stops before anything leaves your machine.
+you stop babysitting the agent.
+
+<img src="assets/memes/replaced.jpg" width="360" alt="meme: ai will replace you. me, who already replaced myself with claude">
 
 ## install
 
-paste this into Claude Code:
+### agent
+
+paste this into your agent:
 
 ```
 set up https://github.com/gntrs/workflow
 ```
 
-it clones the repo, reads [SETUP.md](SETUP.md), looks at your machine, asks you about six things once, installs into `~/.claude/`, tailors it to your ram and models, and proves it worked.
+it reads [SETUP.md](SETUP.md), asks six things once and fits it to your machine.
 
-no agent, just a shell:
+### mac and linux
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/gntrs/workflow/main/install.sh | bash -s -- --yes
 ```
 
-windows:
+### windows
 
 ```powershell
 git clone --depth 1 https://github.com/gntrs/workflow $HOME\.claude\workflow
-powershell -ExecutionPolicy Bypass -File $HOME\.claude\workflow\install.ps1
+powershell -ExecutionPolicy Bypass -File $HOME\.claude\workflow\install.ps1 -Yes
 ```
 
-flags: `--with-pstack`, `--with-brain`, `--gitignore`, `--force`, `--dry-run` (powershell: `-WithPstack`, `-WithBrain`, `-Gitignore`, `-Force`, `-DryRun`).
-
-## what it fixes
-
-| without it | with it |
-|---|---|
-| the agent says "done" and it isn't | every task has a finish line you can check, and ends with the app actually run |
-| one long chat that forgets everything after a compact | state lives in a file, and a fresh agent picks it up from there |
-| a review at the very end that sends everything back | the plan is read cold before building, each piece is reviewed as it lands |
-| a commit, push or deploy you never asked for | nothing leaves without your yes, that time, for that thing |
-| ui that looks like every other ai ui | real references measured first, your brand used, less every round |
-| a simple fix buried in ceremony | quick things run in the main thread, no agents, no plan |
+then restart your agent and `/cook` something real. installer flags are at the top of [install.sh](install.sh).
 
 ## how it runs
 
 <picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/loop-phone-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/loop-phone-light.svg">
   <source media="(prefers-color-scheme: dark)" srcset="assets/loop-dark.svg">
-  <img alt="your task goes to /cook, which picks quick, build or deep. every lane ends with a branch, a real run, a hand test, the size sweep and notes, then /review predicts your no, then /ship waits for your yes." src="assets/loop-light.svg">
+  <img alt="the recipe (your task) goes to /cook, the chef sitting on its box, which picks the microwave (quick), the stove (build) or the slow cook (/deep). every lane ends on the plate: a branch, a real run, a hand test, the size sweep and notes, then a taste test (/review) predicts your no, then serve (/ship) waits for your yes." src="assets/loop-light.svg">
 </picture>
+
+it starts small and moves up a lane if the work fights back.
 
 | lane | looks like | runs |
 |---|---|---|
-| **quick** | a typo, a color, a config flip | the main thread does it. no agents |
-| **build** | one feature or bug in code you know | up to 2 helpers: an explorer and a cold reviewer. the plan is read before the build |
-| **deep** | unfamiliar code, broke twice, or "run until it's done" | research, a plan with a checkable finish line, your read, then up to 4 agents in flight, builders and reviewers together, each builder on its own files while a coordinator plans, reviews and integrates |
+| **microwave** (quick) | a typo, a color, a flag | main thread, no subagents |
+| **stove** (build) | one feature or bug you know | up to 2 helpers, the plan read cold first |
+| **slow cook** (/deep) | unfamiliar code, broke twice, "run till done" | research, a plan, your read, up to 4 agents |
 
-what makes it fast:
+stove and slow cook print a `/goal` with a finish line you can check, so the session can't stop short.
 
-- **review earlier.** a cold read of the plan before anyone builds, a cold read of each lane the moment it lands while the others still run, then the final one. findings land while they are cheap.
-- **the coordinator doesn't build.** on deep runs it plans, briefs, integrates and reviews, so its context stays small and doesn't compact mid run.
-- **a new ask gets its own lane.** it doesn't wait behind the batch that is running.
+## the commands
 
-on build and deep, cook prints a `/goal` line with a measured finish line, so the session can't stop short. it always ends at `/ship`. the always on rules behind all of it are in [rules/RULES.md](rules/RULES.md).
+### <img src="assets/poses/cook.png" width="96" align="absmiddle" alt="the chef stirring a pot"> /cook &lt;task&gt;
 
-## the skills
+the one door. it picks the lane, the models and how many agents. [skills/cook](skills/cook/SKILL.md)
 
-| skill | what it does | say |
-|---|---|---|
-| [`/cook`](skills/cook/SKILL.md) | the one door. sizes any task, picks lane, models and caps, ends every lane the same way | cook, build this, fix this |
-| [`/deep`](skills/deep/SKILL.md) | the deep lane: research, plan, the gate, a long autonomous run, proof | deep, run until done |
-| [`/ship`](skills/ship/SKILL.md) | pre-flight. the exact text that would go public, every file, real test output, hand tests. commits and pushes only after your yes | ship it, push it |
-| [`/review`](skills/review/SKILL.md) | one fresh agent reads the work cold and says ship, fix these, or redo | is this the best we can do |
-| [`/status`](skills/status/SKILL.md) | done? pushed? merged? in five lines | all done? |
-| [`/initiate`](skills/initiate/SKILL.md) | sets up a repo for agents: private notes in a gitignored `.claude/` | initiate |
-| [`design`](skills/design/SKILL.md) | the front end method. loads on its own before any ui work | |
-| [`write`](skills/write/SKILL.md) | anything a human reads, and the tells that make text read as ai | |
-| [`playbook`](skills/playbook/SKILL.md) | swarm shapes, debugging, research, the mistake ledger | |
-| [`/brain`](skills/brain/SKILL.md), [`/dream`](skills/dream/SKILL.md) | optional. a notes vault every repo writes to, and its cleanup | remember this, clean the vault |
+<img src="assets/memes/bro-cook.jpg" width="360" alt="meme: a cat on the stove, who let bro cook">
 
+### <img src="assets/poses/think.png" width="96" align="absmiddle" alt="the chef thinking"> slow cook (/deep)
 
-## design that doesn't look generated
+for work that fights back, or runs while you sleep. research first, then a plan in a file you read, then a long run that survives a compact. [skills/deep](skills/deep/SKILL.md)
 
-the [design](skills/design/SKILL.md) skill is the loop that kept landing:
+### <img src="assets/poses/tray.png" width="96" align="absmiddle" alt="the chef carrying a tray"> serve (/ship)
 
-1. **references first.** open real products that do this well and measure them. copy what you already own before inventing anything.
-2. **your brand.** it finds your tokens, theme or site and writes a `brand.md`. none yet: it builds one with you from three references you pick.
-3. **your words are the spec.** your reactions go into the builders' briefs verbatim, never softened.
-4. **a reviewer predicts your no.** a fresh agent gets only the screen, your words and your taste file, before you look.
-5. **less.** one view where there are two, a plain word instead of a badge, nothing the data doesn't back.
-6. **measured, then looked at.** [responsive-probe.js](tools/responsive-probe.js) lays the app out at every size: overflow, targets under 44 px, controls stranded off screen.
+prints the exact text that would go public, every file, the real test output and your hand tests. then it waits. nothing leaves without your yes, not even a commit. [skills/ship](skills/ship/SKILL.md)
 
-## the brain, optional
+### <img src="assets/poses/taste.png" width="96" align="absmiddle" alt="the chef tasting from a spoon"> taste test (/review)
 
-say yes in setup and you get `~/vault`, an [Obsidian](https://obsidian.md) friendly folder where every repo keeps a hub, a log and an open items list, linked both ways. `/brain` answers "what did we decide" from it, `/dream` keeps it tidy. say no and each repo keeps the same notes in its own gitignored `.claude/`. the skeleton is in [brain-template/](brain-template/HOME.md).
+a fresh agent reads the work, your exact words and your taste file, then says ship it, fix these, or bin it. [skills/review](skills/review/SKILL.md)
 
-## for agents
+### <img src="assets/poses/thumbs.png" width="96" align="absmiddle" alt="the chef giving a thumbs up"> /status
+
+done? pushed? merged? five lines, no essay. [skills/status](skills/status/SKILL.md)
+
+### <img src="assets/poses/wave.png" width="96" align="absmiddle" alt="the chef waving"> prep the kitchen (/initiate)
+
+once per repo. private notes in `.claude/` that never get committed. [skills/initiate](skills/initiate/SKILL.md)
+
+### <img src="assets/poses/sleepy.png" width="96" align="absmiddle" alt="the chef asleep"> recipe book (/brain) and /dream
+
+optional. one notes vault every repo writes to, tidied while you're away. [skills/brain](skills/brain/SKILL.md) · [skills/dream](skills/dream/SKILL.md)
+
+### house rules
+
+these load on their own:
+
+- **[design](skills/design/SKILL.md)** before any ui.
+- **[write](skills/write/SKILL.md)** anything a person reads.
+- **[playbook](skills/playbook/SKILL.md)** swarm shapes, debugging, research, the mistake ledger.
+
+## in depth
+
+### why you need this
+
+<img src="assets/memes/lies-again.jpg" width="360" alt="meme: when you call out chatgpt for lying and it apologises, then lies again">
+
+| without it | with it |
+|---|---|
+| "done." it is not done | a finish line you can check, and the app actually run |
+| it forgets everything after a compact | the state lives in a file, a fresh agent picks it up |
+| a review at the end sends it all back | the plan read cold first, each piece reviewed as it lands |
+| a push you never asked for | nothing leaves without your yes |
+| you say "too busy" for the fifth time | it wrote it down the first time |
+
+### why it's fast
+
+- **review early.** the plan is read before anyone builds, and each lane the moment it lands.
+- **parallel.** up to 4 agents, fewer on less ram. each owns its own files, so nothing collides.
+- **the coordinator doesn't build,** so its context stays small.
+- **a new ask gets its own lane,** never queued behind the batch.
+- **two checks.** a fast one before every preview, the full suite before ship.
+
+### design that doesn't look generated
+
+1. **references first.** it opens real products and measures them.
+2. **your brand.** it finds yours in the code, or builds a `brand.md` with you from three sites you like.
+3. **your words are the spec.** "this looks cheap" goes to the builder as "this looks cheap", not "refine the styling".
+4. **a reviewer predicts your no** before you look.
+5. **less.** every round ends with "what can still go?"
+6. **measured at every size.** [responsive-probe.js](tools/responsive-probe.js) catches sideways scroll, tiny text and buttons too small to tap.
+
+### it learns your taste
+
+every reaction you give goes into a taste file, word for word, dated, with what it was about. the next screen is built and reviewed against it. say the same thing twice and it becomes a rule. no taste file yet: the first design task asks three things, what you love, what you hate, and one site you'd copy. [the template](brain-template/taste/taste.md)
+
+### the rules
+
+always on in [rules/RULES.md](rules/RULES.md), and they beat every skill: nothing leaves without your yes, git only with a yes, no ai authorship, every job ends with a hand test.
+
+### the brain, optional
+
+say yes in setup and you get `~/vault`, an obsidian folder where every repo keeps a hub, a log and its open items. `/brain` answers "what did we decide", `/dream` tidies it. say no and the same notes live in each repo's `.claude/`. skeleton in [brain-template](brain-template/HOME.md).
+
+<img src="assets/memes/only-god.jpg" width="360" alt="meme: when i wrote this code, only god and i understood what it did. now only god knows">
+
+### for agents
 
 [AGENTS.md](AGENTS.md) for any agent opening this repo, [llms.txt](llms.txt) for a map. the skills are plain markdown, so an agent without slash commands can read `skills/cook/SKILL.md` and follow it.
 
 ## credits
 
-- [pstack](https://github.com/ericlitman/open-pstack) (MIT) is the engine underneath: playbooks for features, bugs, plans and long runs. optional, installed as a plugin, never copied in.
-- the deep lane follows Dex Horthy's talk "No Vibes Allowed": the context window is the lever, so progress goes into files at every boundary.
+- [pstack](https://github.com/ericlitman/open-pstack) (mit) is the engine underneath. optional, installed as a plugin, never copied in.
+- the slow cook follows dex horthy's talk "no vibes allowed": the context window is the lever, so progress goes into files.
+- the font is [figtree](https://github.com/erikdkennedy/figtree) (sil open font license, [assets/fonts/OFL.txt](assets/fonts/OFL.txt)).
 
 ## license
 
-[MIT](LICENSE)
+[mit](LICENSE)
+
+<!-- the memes are from pinterest. they belong to whoever made them, open an issue and one comes down. -->

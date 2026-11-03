@@ -29,6 +29,8 @@ default down. escalate only when it fights back.
 | build | one feature or bug in a known area | high | up to 2 in flight at once: explorer, plan reviewer, final reviewer, in sequence | pstack poteto-mode with its feature or bug-fix playbook. without pstack: a short plan in chat, build in the main thread, one reviewer subagent |
 | deep | brownfield, unfamiliar, "still broken" twice, a swarm already failed, the user steps away | xhigh or max | up to 4 subagents in flight, builders and reviewers together, inside the cap from step 0 | `/deep` |
 
+a lane can move up mid run. when quick or build hits a deep sign above, stop, say `lane: build to deep` and the sign in one line, write what is done to `## cooking`, and hand over to `/deep`. what you already read counts as its research, so it starts at the plan. it never moves down on its own.
+
 this table and the cap in step 0 are the one source of truth for models and caps. `/deep`, `/review` and `playbook` point here instead of repeating numbers. `~/.claude/skills/pstack/models.md` covers pstack's own roles only. set `model` on every agent call, the main thread's model never decides a subagent's. setup swaps these names for what the user's plan has:
 
 | role | model | effort |

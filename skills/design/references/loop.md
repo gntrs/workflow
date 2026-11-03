@@ -4,13 +4,7 @@ the process from [SKILL.md](../SKILL.md) section 3, with the briefs.
 
 ## logging reactions
 
-every reaction the user gives, the moment it arrives:
-
-```
-<date> <screen> "<their exact words>" -> what changed
-```
-
-in the taste file (the brain if installed, `~/vault/taste/`, else `.claude/taste.md` in the repo). a reaction becomes a rule in this skill only after it repeats or the user says it is a rule.
+where, when and the format: [SKILL.md](../SKILL.md) section 3b. the same "no" twice becomes a rule there.
 
 reading a reaction:
 

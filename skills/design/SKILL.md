@@ -9,6 +9,14 @@ how to make a screen the user says yes to on the first look, not the fourth. mos
 
 depth is in `references/`. where a rule says OPEN, the user decides. ask.
 
+five things under every rule here:
+
+- **less.** every element carries information or it goes.
+- **alive, never gated.** motion is ambient or answers the pointer. nothing hides until you scroll.
+- **one of each.** one accent, one radius, one face, one spring, one ease.
+- **phone first.** people review on their phones, so the phone layout is the real one.
+- **their words stay theirs.** cut chrome freely, never reword what the user wrote.
+
 ## 1. references first, never guess
 
 before drawing anything, find what already does this well and measure it.
@@ -59,6 +67,21 @@ the exact names live in cook's model table; setup swaps them for what the user's
 
 the reviewer brief, the builder brief and how to log reactions: [references/loop.md](references/loop.md).
 
+## 3b. taste, learned
+
+the taste file is how the user's "no" gets said once instead of five times. it lives in the brain if installed (`~/vault/taste/taste.md`), else `.claude/taste.md` in the repo.
+
+1. **day one.** no taste file, or an empty one: before the first screen, ask three things in one message. what they love (two or three links or screenshots), what they hate, one site or app they would copy. write the answers into the file verbatim, dated. "just go" skips it; ask again after their first reaction.
+2. **every reaction, the moment it arrives,** verbatim, dated, with what it was about. copy reactions too ("sounds like ai"), under `## copy`.
+   ```
+   <date> <screen> "<their exact words>" -> what changed
+   ```
+3. **read it before every brief.** builders get it, the fresh reviewer gets it, and the reviewer quotes it back when it predicts a "no".
+4. **the same "no" twice becomes a rule.** the same complaint in any words, on any screen: move it under `## the rule you keep repeating` and treat it as a hard no for this user from then on. tell them in one line: `taste: "<their words>" is a rule now`.
+5. **their word beats this skill.** a reaction that contradicts a default here wins for this user. the default stays for everyone else.
+
+how to read a reaction ("better, but more", "still", "not better" twice): [references/loop.md](references/loop.md).
+
 ## 4. less
 
 the default check before anything is shown. too much ui is the most common "no".
@@ -85,6 +108,7 @@ these apply to every product. each was learned from a real "no".
 - no cards of random heights. equal heights, aligned tops.
 - no emoji in headings or buttons. no em dashes anywhere, ui strings included.
 - no font picked blind: show faces on the real screen and let the user pick.
+- no character, logo or photo the user has no rights to, slipped in quietly. a known character or someone's meme is the user's call: name the risk once, then do what they say.
 
 ## default taste, override in your taste file
 
@@ -121,6 +145,7 @@ the phone layout is the real one: people review on their phones.
   - **fast check, before every preview, under 5 minutes:** the build passes, the main flow works by hand or script, and `~/.claude/tools/responsive-probe.js` at 3 sizes (a small phone, a common phone, a laptop).
   - **full sweep, before ship:** every size in the probe's list, chromium and webkit, every screen and state walked, overflow 0, small targets 0, tiny text 0, unreachable 0, console errors 0.
 - the probe lays the page out in an iframe of each exact size and measures. a resized maximised window is silently ignored, so never trust one. paste it into the console of a tab in front, or headless: `node tools/probe-test.mjs http://localhost:3000 / /login` sweeps those paths and exits non-zero on a fault. edit its `SIZES` to the devices the project actually runs on, phones first.
+- **images that leave the page** (a readme, a social card, an email) bring their own background, because the page they land on may be dark. check their text at the size they actually show: a 1200 px diagram on a phone shrinks 14 px labels to 4 px, so it gets its own phone version.
 - a screenshot you are sent may be a stale build. grep a string from it in the code before fixing.
 - say which numbers were measured and which were inferred.
 
