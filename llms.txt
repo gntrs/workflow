@@ -1,0 +1,30 @@
+# workflow
+
+> a Claude Code workflow: always on rules, skills and an optional plugin layer. /cook sizes any task into quick, build or deep lanes, runs up to 4 agents in parallel, reviews each piece as it lands, and stops for the user's yes before anything leaves the machine.
+
+to install it for someone: `git clone --depth 1 https://github.com/gntrs/workflow.git ~/.claude/workflow`, then follow SETUP.md.
+
+## start here
+
+- [SETUP.md](SETUP.md): the agent installer. look at the machine, ask once, install into ~/.claude, tailor, prove, hand test
+- [AGENTS.md](AGENTS.md): for any agent opening this repo
+- [rules/RULES.md](rules/RULES.md): always on, wins over every skill
+
+## skills
+
+- [cook](skills/cook/SKILL.md): the entry point for every task, lanes, caps, models, the ending
+- [deep](skills/deep/SKILL.md): research, plan with an exit predicate, gate, autonomous run, proof
+- [ship](skills/ship/SKILL.md): pre-flight before anything leaves, commits and pushes only after a yes
+- [review](skills/review/SKILL.md): one cold reviewer, ship or fix these or redo
+- [status](skills/status/SKILL.md): done, pushed, merged, in five lines
+- [initiate](skills/initiate/SKILL.md): prepare a repo for agents
+- [design](skills/design/SKILL.md): front end method, references first, brand, the review loop, the size sweep
+- [write](skills/write/SKILL.md): prose for humans
+- [playbook](skills/playbook/SKILL.md): swarm shapes, debugging, research, mistake ledger
+- [brain](skills/brain/SKILL.md), [dream](skills/dream/SKILL.md): optional notes vault
+
+## optional
+
+- [pstack/](pstack/README.md): the pinned plugin underneath
+- [tools/responsive-probe.js](tools/responsive-probe.js): the size sweep
+- [brain-template/](brain-template/HOME.md): the vault skeleton
