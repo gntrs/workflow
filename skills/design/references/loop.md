@@ -14,7 +14,7 @@ the failing pattern is "build a guess, show it, get corrected", five times. each
 6. **the fresh reviewer predicts the "no"** and checks the screen against `brand.md`.
 7. **cut, then sweep.**
 
-a stop gate before the pick holds the order: refs measured, options live, sweep clean, then stop for the user. nothing ships past it until they choose. a "just go" builds on the starter and leaves the picker live.
+a stop gate before the pick holds the order: refs read and `ref-check.mjs` clean, options live, sweep clean, then stop for the user. nothing ships past it until they choose. a "just go" builds on looks copied from products you found and read, and leaves the picker live.
 
 ## reading a reaction
 
@@ -39,9 +39,12 @@ brand: <path to brand.md>, read only. use its tokens only. a value it lacks:
   the lead writes it under ## proposed. the token files are brand too: do not
   add or change a value there. kit files are read only: a kit bug goes in
   your report, the lead fixes it once for every screen.
-kit: build from brand.md ## components. a new element goes in your report,
-  never drawn quietly. every new screen draws empty, loading, error and full.
-copy from: <the ref measured for this surface, with its numbers>
+kit: build from brand.md ## components. an element the kit lacks: copy the
+  ref's version of it and list it in your report, never drawn from nothing. every new screen draws empty, loading, error and full.
+ref for this surface: <the ## sources row> and <its evidence folder>. open the
+  screenshots and styles.json first. copy its structure (layout, density, row
+  and panel pattern), never its colors, logo or copy. no ref, or unread: stop
+  and say so, do not build from memory.
 the user's words, verbatim:
   - "<reaction>"
   - "<reaction>"
@@ -52,6 +55,7 @@ before you report: build, this surface's flow, the probe at 3 sizes,
   a screenshot at a phone and a desktop size.
 report: files changed, probe output pasted, proposed values, what you could not check.
 brand check: node ~/.claude/tools/brand-check.mjs <brand.md> [changed files], report pass or the listed hits
+ref check: node ~/.claude/tools/ref-check.mjs <brand.md>, report pass or the findings
 ```
 
 ## reviewer brief
@@ -67,6 +71,7 @@ the user's words, verbatim, newest first:
   - "<reaction>"
 the taste file: <path>
 brand: <path to brand.md>
+refs: brand.md ## sources, each with its evidence folder
 
 1. open it at a phone size and a desktop size. use it.
 2. list every place the user will say "no", in their voice, with the screen and
@@ -78,10 +83,14 @@ brand: <path to brand.md>
    gradients (built from brand colors still passes the script, so check it
    here). name each departure, and call it intended (a proposed value, an
    approved change) or drift.
-4. check the sweep covered every state: every screen, open menus and sheets,
+4. open each surface's ref evidence beside the screen. a surface with no ref, a
+   ref with no evidence or marked unread, or a structure that departs from its
+   ref without a reason is a finding. so is any element in neither the kit nor
+   the ref.
+5. check the sweep covered every state: every screen, open menus and sheets,
    empty, loading, error, long content. name any state it skipped.
-5. check true data: any row, kind, metric or number the backend does not have.
-6. check less: anything that could go.
+6. check true data: any row, kind, metric or number the backend does not have.
+7. check less: anything that could go.
 
 verdict: ship, fix these (numbered), or redo (one paragraph why).
 ```

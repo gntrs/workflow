@@ -92,8 +92,8 @@ for dir in "$SRC"/skills/*/; do
   run cp -R "$dir" "$dest"; did+=("skills/$name")
 done
 
-# 4. the size sweep probe, its runner and the brand check
-for t in responsive-probe.js probe-test.mjs brand-check.mjs; do
+# 4. the size sweep probe, its runner, the brand check, and the ref reader and its gate
+for t in responsive-probe.js probe-test.mjs brand-check.mjs ref-read.mjs ref-check.mjs; do
   same "$SRC/tools/$t" "$CLAUDE_DIR/tools/$t" || { run cp "$SRC/tools/$t" "$CLAUDE_DIR/tools/"; did+=("tools/$t"); }
 done
 

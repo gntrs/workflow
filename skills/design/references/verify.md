@@ -1,4 +1,4 @@
-# verify: two tiers, the probe, the brand check, thresholds, contrast, browser traps
+# verify: two tiers, the probe, the brand check, the ref check, thresholds, contrast, browser traps
 
 front end work is not done until it is measured. say which numbers were measured and which were inferred, every time.
 
@@ -6,8 +6,8 @@ front end work is not done until it is measured. say which numbers were measured
 
 | tier | when | what | budget |
 |---|---|---|---|
-| fast | before every preview, after every builder lands | build passes, the main flow works, the probe at 3 sizes (320x690, 390x844, 1440x900), the brand check on the changed files, no console errors | under 5 minutes |
-| full | before ship | every size in `SIZES`, chromium and webkit, every screen and state walked, the 12 px floor, console errors, the brand check on every file the work touched, screenshots looked at | as long as it takes |
+| fast | before every preview, after every builder lands | build passes, the main flow works, the probe at 3 sizes (320x690, 390x844, 1440x900), the brand check on the changed files, `ref-check.mjs`, no console errors | under 5 minutes |
+| full | before ship | every size in `SIZES`, chromium and webkit, every screen and state walked, the 12 px floor, console errors, the brand check on every file the work touched, `ref-check.mjs --ship`, screenshots looked at | as long as it takes |
 
 the fast tier is what makes small, frequent previews possible. running the full sweep on every one pixel change is what makes iteration slow.
 
@@ -51,6 +51,17 @@ text and controls at opacity 0 (a reveal on scroll that has not run) are counted
 - a hit is a question, not a fix: a gap goes under `## proposed`, drift is asked once and logged under `## changes` ([SKILL.md](../SKILL.md) section 1), a value the brand accepts goes under `## allow`, one line of someone else's brand gets `brand-check-ignore` ([SKILL.md](../SKILL.md) section 1).
 - `node tools/brand-check.mjs --self-test`, in a clone of the workflow repo, proves it still catches a planted off brand value and passes a clean file.
 
+## the ref check
+
+`node ~/.claude/tools/ref-check.mjs <brand.md>` reads `brand.md` only, no app code. it fails when:
+
+- `## sources` has no rows: nothing real is behind the brand
+- a row that is not `unread` has no evidence, or its evidence path does not exist
+- every ref for a surface is `unread`
+- a `## components` row has no `from`, or its `from` is neither an existing file nor a `## sources` surface or ref
+
+with `--ship` it also fails `status: default, not chosen`. `node tools/ref-check.mjs --self-test` and `node tools/ref-read.mjs --self-test`, in a clone of the workflow repo, prove both still work.
+
 ## coverage, or the sweep lies
 
 a sweep that skips states reports clean. it only covers what it walked.
@@ -84,8 +95,8 @@ a sweep that skips states reports clean. it only covers what it walked.
 
 ## no browser, or not web
 
-- a ref behind a login or that will not load: use values already in `brand.md` or the taste file, or the user's screenshots, and mark them inferred.
-- refs only from screenshots: read values off them and mark every one inferred, not measured.
+- a ref behind a login: `ref-read.mjs <url> --storage state.json` with a storage state from a logged in session. one that will not load: ask for screenshots and read them with `ref-read.mjs <file>`. until then the row stays `unread` and that surface is not built. never fall back to values from memory.
+- refs only from screenshots: they are real, the user's own pick. read values off them and mark every one inferred.
 - native apps: run the simulator or emulator at the smallest and the largest device, each at the default and the largest dynamic type size. the probe is web only, and the brand check reads web and react native source only: swift, kotlin and dart go to the reviewer.
 - no tooling at all: the hand test carries the sweep, and every number in the report is labelled unseen.
 

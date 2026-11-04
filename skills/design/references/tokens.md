@@ -24,7 +24,7 @@ copy a whole set, do not mix sets. a project that ships tokens keeps them: read 
 
 ## the neutral starter
 
-for "just go" with no brand. copy it into `brand.md` as written, with `status: default, not chosen`. the accent is ink on purpose: nobody picked a hue yet, and the first look round picks one.
+only when nothing real can be opened (no browser, no refs, no pics), so a "just go" still gets real looks first. copy it into `brand.md` as written, with `status: default, not chosen`, and `ref-check.mjs --ship` fails until the owner picks. the accent is ink on purpose: nobody picked a hue yet, and the first look round picks one.
 
 ```markdown
 ## color

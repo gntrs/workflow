@@ -36,9 +36,11 @@ each step lands on its own, with the brand check clean and the sweep run. a deci
 
 fixes add drift: a cleanup round that fixes three findings can add seven. rerun `--audit` after each round and compare the counts to the last one. the numbers should only go down.
 
-## the lint, when the project wants a harder gate
+## the lint
 
-`brand-check.mjs` checks values in changed files. a project test in its own suite can add what values alone miss:
+once the kit exists, this is a standard step, not an extra. `brand-check.mjs` checks values in changed files; the project's own linter or a test in its suite holds the parts:
+
+- one kit only: a raw `<button>`, `<input>` or `<select>` outside the kit folder fails, so a screen cannot hand-roll a part the kit has
 
 - a text color role that is never text (the faintest grey used as `color:` fails)
 - a closed type ramp: font sizes only from the set, weights only from the set

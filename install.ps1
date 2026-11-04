@@ -76,8 +76,8 @@ Get-ChildItem (Join-Path $Src 'skills') -Directory | ForEach-Object {
   $script:Did += "skills\$name"
 }
 
-# 4. the size sweep probe, its runner and the brand check
-foreach ($t in 'responsive-probe.js','probe-test.mjs','brand-check.mjs') {
+# 4. the size sweep probe, its runner, the brand check, and the ref reader and its gate
+foreach ($t in 'responsive-probe.js','probe-test.mjs','brand-check.mjs','ref-read.mjs','ref-check.mjs') {
   $to = Join-Path $Claude "tools\$t"
   $from = Join-Path $Src "tools\$t"
   if (-not (Same $from $to)) {

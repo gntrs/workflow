@@ -1,12 +1,10 @@
 # components that hold up
 
-each one is a recipe. if the project already has the component in code, copy from the file, not from memory. values here are starting points; `brand.md` wins, and a value it lacks goes under its `## proposed`.
+the mechanics of common parts: what breaks them and how big they must be. the look (colors, radius, blur amounts, sizes) comes from `brand.md` and from the ref for that surface, never from here. build a part only when the kit or the surface's ref has it; if the project already has the component in code, copy from the file. a value the brand lacks goes under its `## proposed`.
 
-## the glass header pill
+## a glass header, when the brand or the ref has one
 
-- one row, about 52px, one glass pill the width of the screen, brand left, main action right, links in the middle only from 900px. no nav row on phones.
-- restrained recipe: the surface at .84 alpha, `backdrop-filter: blur(12px) saturate(1.4)`, a hairline ring, one pixel of white along the top edge.
-- floating variant: `min(760px, 100%)` wide, the surface at .78, `saturate(1.6) blur(16px)`.
+- links in the middle only when they fit, no nav row on phones.
 - fixed, not sticky: a sticky element's backdrop is not the scrolling page in every engine, and the blur goes flat.
 - no `isolation` on it, an isolated element has nothing behind it to blur.
 - no band of transparent header above or below the pill, text would scroll through it.
@@ -22,7 +20,7 @@ each one is a recipe. if the project already has the component in code, copy fro
 ## segmented control with a sliding pill
 
 - the answer to separate tab buttons on a phone.
-- a quiet track, padding 4, radius 16; a pill radius 12 slides to the active item by `translateX(calc(var(--i) * 100%))` over `0.5s cubic-bezier(.32,.72,0,1)`.
+- a pill slides to the active item by `translateX(calc(var(--i) * 100%))`, with the brand's ease.
 - buttons at least 44px tall on phones. labels muted ink, ink when on.
 - a 32px design system segment fails the phone gate as written. make the hit area 44.
 

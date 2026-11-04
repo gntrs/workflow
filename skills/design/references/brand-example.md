@@ -61,14 +61,14 @@ an invented product, filled in to show every field. the values are real and thei
 - what moves: press (scale 0.97 on pointer down), a job card sliding to its new column, nothing on load
 
 ## components
-| element | use | where | recipe |
-|---|---|---|---|
-| button | `<Button variant="primary">`, `"secondary"`, `"quiet"` | src/ui/Button.tsx | primary accent fill, accent ink text, 44px, --radius, press scale 0.97; one primary per screen |
-| text field | `<Field label>` | src/ui/Field.tsx | hairline edge, --radius-sm, 16px text on phones so ios does not zoom, error line under it, no red border |
-| segmented | `<Segmented options>` | src/ui/Segmented.tsx | max 3 options, picked lifts to surface with --shadow, never accent |
-| job card | `<JobCard>` | src/board/JobCard.tsx | surface, hairline edge, --radius, price top right in tabular nums |
-| empty and error | `<StateCard tone>` | src/ui/StateCard.tsx | empty: one line and one action. error: what happened, then what to do |
-| loading | `<Skeleton>` | src/ui/Skeleton.tsx | the real layout in --hairline, no spinner outside a button |
+| element | use | where | from | recipe |
+|---|---|---|---|---|
+| button | `<Button variant="primary">`, `"secondary"`, `"quiet"` | src/ui/Button.tsx | src/ui/Button.tsx | primary accent fill, accent ink text, 44px, --radius, press scale 0.97; one primary per screen |
+| text field | `<Field label>` | src/ui/Field.tsx | src/ui/Field.tsx | hairline edge, --radius-sm, 16px text on phones so ios does not zoom, error line under it, no red border |
+| segmented | `<Segmented options>` | src/ui/Segmented.tsx | src/ui/Segmented.tsx | max 3 options, picked lifts to surface with --shadow, never accent |
+| job card | `<JobCard>` | src/board/JobCard.tsx | job board | surface, hairline edge, --radius, price top right in tabular nums |
+| empty and error | `<StateCard tone>` | src/ui/StateCard.tsx | src/ui/StateCard.tsx | empty: one line and one action. error: what happened, then what to do |
+| loading | `<Skeleton>` | src/ui/Skeleton.tsx | src/ui/Skeleton.tsx | the real layout in --hairline, no spinner outside a button |
 
 not built: toast, tooltip, table. stand-ins: a line under the control for a toast, a `<JobCard>` list for a table. ask before adding one.
 
@@ -93,11 +93,12 @@ not built: toast, tooltip, table. stand-ins: a line under the control for a toas
 | accent hover | --accent-hover | #0d5a4d | #5cc7b3 | accent, one step darker in light, lighter in dark | the primary button had no hover state | 2026-10-29, waiting |
 
 ## sources
-| ref | what was read | values |
-|---|---|---|
-| the shop's old booking page | computed styles, 2026-10-12 | body Inter 15px, radius 10px, accent #0f6b5c |
-| a calm notes app the founder named | computed styles, 2026-10-12 | hairline rgba alpha 0.12, row height 44px, heading weight 600 |
-| a fitness app the founder does not want to look like | screenshots, inferred | saturated green, heavy shadows: what to stay away from |
+| surface | ref | how | evidence | date | values |
+|---|---|---|---|---|---|
+| booking | https://book.truewheel.example | read | .claude/refs/book.truewheel.example-2026-10-12 | 2026-10-12 | body Inter 15px, radius 10px, accent #0f6b5c |
+| job board | a calm notes app the founder named | read | .claude/refs/notes-app-2026-10-12 | 2026-10-12 | hairline rgba alpha 0.12, row height 44px, heading weight 600 |
+| job board | two shop management apps, found with "bike repair shop booking app" | read | .claude/refs/shop-apps-2026-10-13 | 2026-10-13 | jobs as columns by status, price on the card, my pick |
+| stay away | a fitness app the founder does not want to look like | user pic | .claude/refs/file-fitness-2026-10-12 | 2026-10-12 | inferred: saturated green, heavy shadows |
 
 ## changes
 - 2026-10-30 radius on the job card was 12px in code, brand.md said 10px. founder: brand wins, code fixed.

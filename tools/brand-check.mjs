@@ -8,7 +8,7 @@
 //     .css .scss .sass .less .html .astro .mdx .jsx .tsx .js .mjs .cjs .ts .vue .svelte.
 //     skips node_modules (a folder walk also vendor, dist, build, .next), lock files, *.min.*, *.svg and the
 //     token files themselves, the workflow's own tools (brand-check.mjs, probe-test.mjs,
-//     responsive-probe.js, brand-test/, probe-test/) and a `looks.*` file holding the looks
+//     responsive-probe.js, ref-read.mjs, ref-check.mjs, brand-test/, probe-test/, ref-test/) and a `looks.*` file holding the looks
 //     not yet picked; in git mode every changed file it skips is named on stderr. a folder argument is walked with the same filter; the skipped folder
 //     names count only below the folder you name. a file named on the command line is always
 //     checked. a changed file is checked whole, not only its changed lines.
@@ -130,12 +130,12 @@ const here = dirname(fileURLToPath(import.meta.url));
 const CODE = new Set(['.css', '.scss', '.sass', '.less', '.html', '.astro', '.mdx', '.jsx', '.tsx', '.js', '.mjs', '.cjs', '.ts', '.vue', '.svelte']);
 const STYLESHEET = new Set(['.css', '.scss', '.sass', '.less']);
 const MARKUP = new Set(['.html', '.vue', '.svelte', '.astro', '.mdx']);
-const SKIP_DIRS = new Set(['node_modules', 'vendor', 'dist', 'build', 'out', 'coverage', '.next', '.nuxt', '.output', '.svelte-kit', '.vercel', '.git', 'brand-test', 'probe-test']);
+const SKIP_DIRS = new Set(['node_modules', 'vendor', 'dist', 'build', 'out', 'coverage', '.next', '.nuxt', '.output', '.svelte-kit', '.vercel', '.git', 'brand-test', 'probe-test', 'ref-test']);
 // git mode trusts git to leave out build output, so a route folder named build or vendor is still checked.
-const GIT_SKIP_DIRS = new Set(['node_modules', '.git', 'brand-test', 'probe-test']);
+const GIT_SKIP_DIRS = new Set(['node_modules', '.git', 'brand-test', 'probe-test', 'ref-test']);
 // the workflow's own tools, copied into a project's tools/, and the looks file that holds the
 // options not yet picked. a file named on the command line is always checked (token files excepted).
-const SKIP_NAMES = new Set(['brand-check.mjs', 'probe-test.mjs', 'responsive-probe.js']);
+const SKIP_NAMES = new Set(['brand-check.mjs', 'probe-test.mjs', 'responsive-probe.js', 'ref-read.mjs', 'ref-check.mjs']);
 const GENERIC = new Set(['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy', 'system-ui', 'ui-sans-serif',
   'ui-serif', 'ui-monospace', 'ui-rounded', '-apple-system', 'blinkmacsystemfont', 'emoji', 'math',
   'inherit', 'initial', 'unset', 'revert', 'none']);
