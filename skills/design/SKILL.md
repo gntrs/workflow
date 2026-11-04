@@ -99,7 +99,7 @@ each one held for a reason. a brand or the taste file overrides any of them. one
 - **no eyebrows** (a small uppercase spaced label above a heading): the most copied generated look, and it repeats the heading.
 - **no decorative gradients,** not on type, not on the accent: one flat value reads as a decision, a gradient reads as a template.
 - **no reveal on scroll:** after a jump or a fast fling the screen sits at opacity 0. scroll motion only when scrubbed, every resting frame whole. [references/motion.md](references/motion.md)
-- **no glass cards on blurred blobs:** the stock generated hero. glass on chrome that reads clean is fine.
+- **no glass cards on blurred blobs:** the stock generated hero. glass on chrome that reads clean is fine. liquid glass components only when the user asks for them: [references/glass.md](references/glass.md).
 - **no invented brand lore:** no made up origin or slogan cadence. the true origin in two plain lines or nothing.
 - **one segmented control,** not separate tab buttons, on a phone: tabs wrap and misalign at 320 px.
 - **cards in a row are one height,** tops aligned: a mismatch reads as broken.
@@ -142,6 +142,7 @@ the full sweep is clean, the brand check has no hits (proposed values aside), `r
 | [references/taste-example.md](references/taste-example.md) | a filled taste file, one person's picks |
 | [references/tokens.md](references/tokens.md) | the token shape and the neutral starter set |
 | [references/components.md](references/components.md) | the mechanics of common parts: hit boxes, segmented control, glass, cards, buttons, data rows |
+| [references/glass.md](references/glass.md) | liquid glass with glisse, only on the user's request, and how it fits the kit, refs and sweep |
 | [references/motion.md](references/motion.md) | scrubbed scroll, one spring, eases, reduced motion, shaders as accent only |
 | [references/verify.md](references/verify.md) | the two tier check, the probe, the brand check, thresholds, contrast, browser traps |
 | [references/assets.md](references/assets.md) | generated renders, cutouts, icons, sizes |

@@ -4,6 +4,8 @@ the mechanics of common parts: what breaks them and how big they must be. the lo
 
 ## a glass header, when the brand or the ref has one
 
+- liquid glass components (glisse) only when the user asks: [glass.md](glass.md).
+
 - links in the middle only when they fit, no nav row on phones.
 - fixed, not sticky: a sticky element's backdrop is not the scrolling page in every engine, and the blur goes flat.
 - no `isolation` on it, an isolated element has nothing behind it to blur.
