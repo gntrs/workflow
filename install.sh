@@ -72,7 +72,7 @@ touch_claude() { [ -f "$CLAUDE_DIR/CLAUDE.md" ] || run touch "$CLAUDE_DIR/CLAUDE
 add_line() {
   touch_claude
   if ! grep -qxF "$1" "$CLAUDE_DIR/CLAUDE.md" 2>/dev/null; then
-    if [ $DRY -eq 1 ]; then echo "would: append '$1' to CLAUDE.md"; else printf '\n%s\n' "$1" >> "$CLAUDE_DIR/CLAUDE.md"; fi
+    if [ $DRY -eq 1 ]; then echo "would: append '$1' to $CLAUDE_DIR/CLAUDE.md"; elif [ -s "$CLAUDE_DIR/CLAUDE.md" ]; then printf '\n%s\n' "$1" >> "$CLAUDE_DIR/CLAUDE.md"; else printf '%s\n' "$1" > "$CLAUDE_DIR/CLAUDE.md"; fi
     did+=("CLAUDE.md: $1")
   fi
 }
