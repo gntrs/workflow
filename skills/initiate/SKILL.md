@@ -14,7 +14,7 @@ if the user passed a description of the project, use it. otherwise work it out f
 the step that gets missed, and not recoverable once a file is committed.
 
 - confirm this is a git repo. if not, stop and ask before `git init`.
-- the notes files are `.claude/CLAUDE.md`, `.claude/log.md`, `.claude/tbd.md`, `.claude/taste.md`, `.claude/plans/`, `.claude/research/`, `.claude/sql/`, `.claude/run/`. add each to `.git/info/exclude`, without duplicating a line. that file is local to this clone and never committed, so nothing in the repo changes. never ignore all of `.claude/`: teams commit `.claude/settings.json`, `commands/` and `agents/` there.
+- the notes files are `.claude/CLAUDE.md`, `.claude/log.md`, `.claude/tbd.md`, `.claude/taste.md`, `.claude/brand.md`, `.claude/plans/`, `.claude/research/`, `.claude/sql/`, `.claude/run/`. add each to `.git/info/exclude`, without duplicating a line. that file is local to this clone and never committed, so nothing in the repo changes. never ignore all of `.claude/`: teams commit `.claude/settings.json`, `commands/` and `agents/` there.
 - verify: create `.claude/plans/probe`, run `git status --short --ignored .claude`, confirm it shows as ignored (`!!`) and not as untracked, then delete the probe. also `git ls-files` on the notes paths must print nothing: a notes file already tracked is still committed despite the ignore, flag it and ask. do not continue until both pass.
 
 ## 2. read the repo, do not assume

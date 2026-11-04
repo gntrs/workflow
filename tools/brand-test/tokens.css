@@ -1,0 +1,11 @@
+/* token file: colors that are not in the brand tables (one wide gamut, one black), a radius, a spacing step and a shadow */
+:root {
+  --ground: #fbfbfa;
+  --success: #1f9d55;
+  --warning: rgba(245, 158, 11, 0.9);
+  --radius-sm: 4px;
+  --space-5: 20px;
+  --ok: oklch(0.6 0.12 170);
+  --black: #000000;
+  --shadow-raised: 0 4px 12px rgba(0, 0, 0, 0.08);
+}

@@ -76,15 +76,18 @@ Get-ChildItem (Join-Path $Src 'skills') -Directory | ForEach-Object {
   $script:Did += "skills\$name"
 }
 
-# 4. the probe
-$probe = Join-Path $Claude 'tools\responsive-probe.js'
-if (-not (Same (Join-Path $Src 'tools\responsive-probe.js') $probe)) {
-  Do-It "copy responsive-probe.js" { Copy-Item (Join-Path $Src 'tools\responsive-probe.js') $probe -Force }
-  $Did += 'tools\responsive-probe.js'
+# 4. the size sweep probe, its runner and the brand check
+foreach ($t in 'responsive-probe.js','probe-test.mjs','brand-check.mjs') {
+  $to = Join-Path $Claude "tools\$t"
+  $from = Join-Path $Src "tools\$t"
+  if (-not (Same $from $to)) {
+    Do-It "copy $t" { Copy-Item $from $to -Force }
+    $Did += "tools\$t"
+  }
 }
 
 # 5. optional: keep the per repo notes files out of every repo. exact paths, never all of .claude/
-$Notes = '.claude/CLAUDE.md','.claude/log.md','.claude/tbd.md','.claude/taste.md','.claude/plans/','.claude/research/','.claude/sql/','.claude/run/'
+$Notes = '.claude/CLAUDE.md','.claude/log.md','.claude/tbd.md','.claude/taste.md','.claude/brand.md','.claude/plans/','.claude/research/','.claude/sql/','.claude/run/'
 if ($Ignore -and (Get-Command git -ErrorAction SilentlyContinue)) {
   $gi = git config --global core.excludesFile
   if (-not $gi) { $gi = Join-Path $HOME '.gitignore_global'; Do-It "set core.excludesFile" { git config --global core.excludesFile $gi } }

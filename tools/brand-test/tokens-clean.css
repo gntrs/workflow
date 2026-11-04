@@ -1,0 +1,11 @@
+/* a token file whose values are all in brand-tokens.md, plus one proposed value */
+:root {
+  --ground: #fbfbfa;
+  --ink: #1a1a1a;
+  --radius: 8px;
+  --radius-sm: calc(var(--radius) - 2px);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --font-sans: Inter, sans-serif;
+  --font-size-body: 16px;
+  --accent-hover: #0052cc;
+}

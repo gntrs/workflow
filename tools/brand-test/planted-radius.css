@@ -1,0 +1,5 @@
+/* planted: px values that are in the brand, but not as a radius */
+.a { border-radius: 24px; }   /* a spacing step in the shape table */
+.b { border-radius: 16px; }   /* a type size */
+.c { border-radius: 20px; }   /* a spacing token in tokens.css */
+.d { @apply rounded-xl; }     /* a tailwind radius name the config does not define */

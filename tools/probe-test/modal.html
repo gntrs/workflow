@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>a sheet open over a scroll locked page</title>
+<style>
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; padding: 16px; overflow: hidden; }
+  .ok { min-width: 44px; min-height: 44px; font: inherit; }
+  .sheet { position: fixed; left: 0; right: 0; bottom: 0; max-height: 70vh; overflow-y: auto; background: #fff; border-top: 1px solid #ccc; padding: 16px; }
+</style></head>
+<body>
+  <!-- not a fault: the list behind an open sheet is locked on purpose, the standard modal scroll lock -->
+  <div style="height: 1600px">list</div>
+  <a class="ok" href="#row" style="display: inline-block">a row far down the list</a>
+  <aside class="sheet" role="dialog" aria-label="person"><h2>person</h2><button class="ok">close</button></aside>
+</body></html>

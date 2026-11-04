@@ -1,0 +1,3 @@
+/* proposed values: reported as proposed, never as hits */
+.button:hover { background: #0052cc; }
+.sheet { border-radius: 12px; }

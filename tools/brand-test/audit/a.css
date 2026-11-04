@@ -1,0 +1,4 @@
+.a { color: #1a1a1a; border-radius: 8px; font-size: 16px; font-weight: 400; font-family: Inter, sans-serif; }
+.b { color: #1A1A1A; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.c { color: #3b82f6; border-radius: 6px; font-size: 13px; font-weight: bold; font-family: Arial, sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.d { font: 500 15px/1.4 var(--font-sans); }

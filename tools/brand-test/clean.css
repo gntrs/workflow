@@ -1,0 +1,32 @@
+/* clean: only brand values. #ff00ff in this comment must not count */
+.page {
+  background: var(--ground);
+  color: #1A1A1A;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  border-radius: 8px;
+}
+.dark { background: #111113; color: rgb(242, 242, 240); }
+.link { color: rgb(0 102 255); border-radius: 0.5rem; }
+.ok { color: #1f9d55; outline-color: rgba(245, 158, 11, .9); }
+.share { background: #1da1f2; border-color: transparent; }
+.hero { background-image: url("data:image/svg+xml;utf8,<svg fill='#ff0000'></svg>"), url(#e5e5e5.png); }
+#abc { border-radius: 0; }
+code { font-family: "JetBrains Mono", ui-monospace, monospace; border-radius: var(--radius); }
+.pill { border-radius: 999px; }
+.small { border-radius: 4px; }
+.white { color: white; border: 1px solid #ffffff; }
+.short { font: 400 16px/1.5 Inter, sans-serif; }
+.inherit { font: inherit; }
+.s1 { box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.s2 { box-shadow: var(--shadow-raised); }
+.s3 { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); }
+.s4 { box-shadow: none; }
+.mix { background: color-mix(in srgb, var(--ink) 50%, transparent); }
+.pillbig { border-radius: 9999px; }
+.inner { border-radius: calc(var(--radius) - 2px); }
+.fallback { color: var(--ink, #1a1a1a); }
+.okl { background: oklch(0.6 0.12 170); }
+.partner { color: #e4002b; } /* brand-check-ignore: fixed by contract */
+
+/* a stack that holds a brand family passes whole: the rest are fallbacks */
+.stack { font-family: Inter, "Helvetica Neue", Arial, sans-serif; }

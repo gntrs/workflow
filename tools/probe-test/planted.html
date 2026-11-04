@@ -4,8 +4,10 @@
 <title>planted faults</title>
 <style>
   body { margin: 0; font: 16px/1.5 system-ui, sans-serif; padding: 16px; }
-  /* planted: a 30 px button, under the 44 px floor */
+  /* planted: a 30 px button, under the 44 px phone floor, fine above 640 */
   .small { width: 30px; height: 30px; padding: 0; }
+  /* planted: a 20 px button, under the 24 px floor at every width */
+  .smaller { width: 20px; height: 20px; padding: 0; }
   /* planted: a strip 2400 px wide, wider than every size swept, that pushes the page sideways */
   .wide { width: 2400px; height: 20px; background: #ddd; }
   .ok { min-width: 44px; min-height: 44px; }
@@ -13,6 +15,14 @@
 <body>
   <h1>planted faults</h1>
   <button class="small" aria-label="tiny close">x</button>
+  <button class="smaller" aria-label="tinier close">y</button>
   <button class="ok">a fine button</button>
   <div class="wide"></div>
+  <!-- planted: a table in a sideways scroller, columns out of sight at every size -->
+  <div class="tablewrap" style="overflow-x: auto; width: 100%"><table style="width: 3000px"><tr><td>name</td><td>place</td><td>stage</td></tr></table></div>
+  <!-- planted: a nav cut off by an overflow-x hidden wrapper, its last links unreachable at phone sizes -->
+  <div class="clipwrap" style="overflow-x: hidden"><nav style="display: flex; width: 2400px"><a href="#a" class="ok" style="display:inline-block">a</a><a href="#b" class="ok" style="display:inline-block; margin-left: 2200px">far link</a></nav></div>
+  <!-- planted: tiny text next to an icon, and a fixed height card hiding its link -->
+  <p class="meta" style="font-size: 10px"><svg width="12" height="12" aria-hidden="true"></svg> due in 5 days</p>
+  <div class="fixedcard" style="height: 120px; overflow: hidden; border: 1px solid #ccc"><p>team plan</p><p>everything in starter</p><p>and more</p><a href="#choose" class="ok" style="display: inline-block">choose team</a></div>
 </body></html>

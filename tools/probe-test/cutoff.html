@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cut off under overflow-x hidden</title>
+<style>
+  html, body { overflow-x: hidden; }
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; padding: 16px; }
+  .row { display: flex; gap: 16px; }
+  .card { flex: 0 0 300px; border: 1px solid #ccc; padding: 16px; }
+</style></head>
+<body>
+  <h1>plans</h1>
+  <!-- planted: two 300 px cards side by side, the second cut off at phone widths, the page itself never scrolls -->
+  <div class="row"><div class="card">starter plan</div><div class="card">team plan</div></div>
+  <!-- not a fault: a closed drawer fully off screen -->
+  <nav style="position: fixed; top: 0; left: 100%; width: 280px">menu <a href="#x" style="display: block; min-height: 44px">menu link</a></nav>
+  <!-- loads late: a strip that lands after 250 ms and must be measured at every size -->
+  <div id="late"></div>
+  <script>setTimeout(() => { document.getElementById('late').innerHTML = '<p style="width: 2400px">late strip</p>'; }, 250);</script>
+</body></html>

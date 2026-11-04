@@ -1,0 +1,6 @@
+/* planted: named color, font shorthand, wide gamut literal, color-mix with a literal, off brand shadow */
+.a { color: red; }
+.b { font: 600 15px/1.4 "Papyrus", serif; }
+.c { background: oklch(0.7 0.1 200); }
+.d { background: color-mix(in srgb, var(--ink) 50%, #ff00aa); }
+.e { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); }

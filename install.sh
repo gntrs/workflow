@@ -2,7 +2,7 @@
 # installs the workflow into ~/.claude. mac and linux (and wsl). windows: install.ps1.
 #
 #   bash install.sh                 asks before anything optional
-#   bash install.sh --yes           defaults, no questions: rules, skills, probe. nothing optional
+#   bash install.sh --yes           defaults, no questions: rules, skills, the probe and brand check. nothing optional
 #   --with-pstack                   also install the pstack plugin (needs the claude cli)
 #   --with-brain                    also install /brain, /dream and create ~/vault from brain-template/
 #   --gitignore                     also add the notes files to your global gitignore
@@ -92,11 +92,13 @@ for dir in "$SRC"/skills/*/; do
   run cp -R "$dir" "$dest"; did+=("skills/$name")
 done
 
-# 4. the size sweep probe
-same "$SRC/tools/responsive-probe.js" "$CLAUDE_DIR/tools/responsive-probe.js" || { run cp "$SRC/tools/responsive-probe.js" "$CLAUDE_DIR/tools/"; did+=("tools/responsive-probe.js"); }
+# 4. the size sweep probe, its runner and the brand check
+for t in responsive-probe.js probe-test.mjs brand-check.mjs; do
+  same "$SRC/tools/$t" "$CLAUDE_DIR/tools/$t" || { run cp "$SRC/tools/$t" "$CLAUDE_DIR/tools/"; did+=("tools/$t"); }
+done
 
 # 5. optional: keep the per repo notes files out of every repo. exact paths, never all of .claude/
-NOTES=".claude/CLAUDE.md .claude/log.md .claude/tbd.md .claude/taste.md .claude/plans/ .claude/research/ .claude/sql/ .claude/run/"
+NOTES=".claude/CLAUDE.md .claude/log.md .claude/tbd.md .claude/taste.md .claude/brand.md .claude/plans/ .claude/research/ .claude/sql/ .claude/run/"
 if [ "$GITIGNORE" = 1 ] && command -v git >/dev/null; then
   gi="$(git config --global core.excludesFile || true)"
   [ -z "$gi" ] && gi="$HOME/.gitignore_global"

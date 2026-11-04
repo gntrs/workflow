@@ -2,7 +2,7 @@
 
 ## the line
 
-- banned: appear on scroll. a fade and 12px rise once per element reads as template motion.
+- the default: no appear on scroll, unless the brand says otherwise. a fade and 12px rise once per element reads as template motion.
 - why: after any jump (an anchor, a back button, a fast fling) a reveal page shows most of the screen at opacity 0, and the scroll gets heavier. content that waits for a scroll is content people do not see.
 - allowed: motion tied to scroll position, eased, resting picture always whole, scrolling back plays it back.
 - the rule: never content hidden until a scroll, never fires once.
@@ -50,12 +50,11 @@
 
 - a WAAPI `oncancel` race can flash one frame. record every frame's rect under real wheel input and count flashes, jerks and frames off screen.
 - a smooth `scrollTo` can be dropped halfway on ios webkit. a "see it work" jump is a rAF glide cancelled by touch, wheel or key.
-- an old spec that says "reveals on scroll are a short fade, once" is stale. ignore it.
 
 ## shaders and webgpu, accent only
 
 - a shader decorates a page, it never is the page. a full page live shader background has lost to a baked image with a css drift: calmer, and free on a phone. ask first: would a baked image look as good?
 - get the library's api from its docs or examples, never from memory.
-- the color rules do not relax on the gpu. no extra hue because the noise looked nice.
+- the brand's colors do not relax on the gpu. no extra hue because the noise looked nice.
 - motion needs a reason, nothing that moves blocks reading, text over it wins the contrast.
 - before shipping: degrades without webgpu (a black canvas is not degrading, a baked image is), stops in a hidden tab, respects reduced motion, compared side by side with a baked still on a real phone. headless webgpu needs `--enable-unsafe-webgpu`; how it looks goes in the hand test as unseen.
