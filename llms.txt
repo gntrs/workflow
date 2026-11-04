@@ -18,7 +18,7 @@ to install it for someone: `git clone --depth 1 https://github.com/gntrs/workflo
 - [review](skills/review/SKILL.md): one cold reviewer, ship or fix these or redo
 - [status](skills/status/SKILL.md): done, pushed, merged, in five lines
 - [initiate](skills/initiate/SKILL.md): prepare a repo for agents
-- [design](skills/design/SKILL.md): front end method, references first, brand, the review loop, the size sweep
+- [design](skills/design/SKILL.md): front end method: only brand elements and real products, the element kit, the review loop, the size sweep
 - [write](skills/write/SKILL.md): prose for humans
 - [playbook](skills/playbook/SKILL.md): swarm shapes, debugging, research, mistake ledger
 - [brain](skills/brain/SKILL.md), [dream](skills/dream/SKILL.md): optional notes vault
@@ -27,4 +27,8 @@ to install it for someone: `git clone --depth 1 https://github.com/gntrs/workflo
 
 - [pstack/](pstack/README.md): the pinned plugin underneath
 - [tools/responsive-probe.js](tools/responsive-probe.js): the size sweep
+- [tools/probe-test.mjs](tools/probe-test.mjs): runs the sweep headless on a url, exits 1 on a fault
+- [tools/brand-check.mjs](tools/brand-check.mjs): flags colors, fonts, radii and shadows not in brand.md
+- [tools/ref-read.mjs](tools/ref-read.mjs): opens a real product or reads a user's pic, saves screenshots and styles as evidence
+- [tools/ref-check.mjs](tools/ref-check.mjs): fails a brand.md with no read reference or a kit part with nothing behind it
 - [brain-template/](brain-template/HOME.md): the vault skeleton

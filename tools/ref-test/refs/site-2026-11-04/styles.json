@@ -1,0 +1,12 @@
+{
+  "url": "http://localhost:4321/",
+  "landed": "http://localhost:4321/",
+  "date": "2026-11-04",
+  "note": "a fixture: evidence for brand-clean.md, shaped like what ref-read.mjs writes",
+  "styles": {
+    "body": { "background": "rgb(250, 250, 247)", "family": "\"Planted Text\", sans-serif", "size": "17px" },
+    "h1": { "family": "\"Planted Display\", serif", "size": "44px", "weight": "700" },
+    "button": { "background": "rgb(31, 111, 235)", "radius": "7px", "height": "40px" },
+    "row": { "height": "48px", "borderBottom": "1px solid rgb(229, 229, 224)" }
+  }
+}

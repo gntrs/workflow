@@ -1,0 +1,7 @@
+/* planted: exactly three off brand values, one per kind */
+.card {
+  background: var(--ground);
+  color: #3b82f6;
+  font-family: "Comic Sans MS", sans-serif;
+  border-radius: 7px;
+}

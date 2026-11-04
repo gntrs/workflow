@@ -1,6 +1,6 @@
 # setup, for the agent
 
-you were asked to set this workflow up for the person you are talking to. it is a set of markdown skills, one rules file and one probe script that go into `~/.claude/`. install it tailored to them, do not copy it blind.
+you were asked to set this workflow up for the person you are talking to. it is a set of markdown skills, one rules file and three small scripts (the size probe, its runner, the brand check) that go into `~/.claude/`. install it tailored to them, do not copy it blind.
 
 works the same on macos, linux, wsl and windows. on windows use `$HOME\.claude` and powershell where this says bash.
 
@@ -70,7 +70,7 @@ say what you ran, not what you read.
 
 1. `ls ~/.claude/skills` lists every skill you installed.
 2. `grep -n '@RULES.md' ~/.claude/CLAUDE.md` shows the import.
-3. `ls ~/.claude/tools/responsive-probe.js` exists.
+3. `ls ~/.claude/tools/responsive-probe.js ~/.claude/tools/probe-test.mjs ~/.claude/tools/brand-check.mjs ~/.claude/tools/ref-read.mjs ~/.claude/tools/ref-check.mjs` lists all five.
 4. pstack yes: `claude plugin list` shows pstack.
 5. brain yes: `ls ~/vault` shows `HOME.md`, `now.md`, `projects/`.
 

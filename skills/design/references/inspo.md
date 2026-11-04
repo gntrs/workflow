@@ -1,44 +1,45 @@
-# inspo: finding, measuring and recording refs
+# inspo: finding, reading and recording real products
 
-## check these first
+every new surface copies the structure of one real product. the brand gives the values, the ref gives the layout. nothing is drawn from memory.
 
-1. what the user already owns: their live site, their other apps, a screen of theirs they liked. those beat any outside ref.
-2. what they saved: a moodboard (an image tool's uploads, a board, a folder), liked posts, bookmarks, links they sent in this or an earlier conversation.
-3. only then, outside refs you pick. mark them as yours.
+## where refs come from, in order
 
-## measure, do not eyeball
+1. **what the user gave you:** a link, a screenshot, a file, a board, their live site, their other apps, a screen they liked. those beat any outside ref.
+2. **what they saved:** a moodboard, liked posts, bookmarks, links from an earlier conversation.
+3. **competitors and similar software, found by you.** ask once: "what do your users use today, or who are your closest competitors?". no answer, or "just go":
+   - search the category: a web search for "<what it does> app", the app store's top results, the user's links and their links.
+   - open two or three, pick the one that does each surface best (the list from one, the editor from another).
+   - write the query and the pick under `## sources`, marked as yours, so the user can swap it.
 
-open each ref in a real browser and read computed styles off real elements. per ref, one row:
+## read it, keep the evidence
 
-| ref | body face / size / line height | display size / weight / tracking | radius | hairline | button height | spacing steps | motion (ease, ms) |
-|---|---|---|---|---|---|---|---|
+`node ~/.claude/tools/ref-read.mjs <url> --surface <name>`:
 
-- for motion, record frames (a screen recording or per frame screenshots) and read timing and overshoot off them.
-- a ref you could not open (a code sandbox that blocks fetch, a login wall) is written down as unread, and the user is asked to paste it. never describe a ref you did not see.
-- open source refs: read the license. AGPL means look only, never copy code. MIT can be copied with the notice.
+- opens it headless at 390 and 1440, saves both screenshots and the computed styles (body, headings, the first button and input, a list row, a hairline, the content width) to `.claude/refs/<host>-<date>/`
+- prints the row for `## sources`
+- behind a login: save a playwright storage state from a logged in session and pass `--storage state.json`
+- a screenshot or file the user gave: `ref-read.mjs <file> --surface <name>` copies it into `.claude/refs/` and marks it `user pic`, values inferred by eye. pics count as real, they are the user's own pick
+- motion: record frames (a screen recording or per frame screenshots), save them in the same folder, read timing and overshoot off them
+- a ref you could not open stays `unread`, and the user is asked for screenshots or a logged in session. never a row for a ref nobody read
+- open source refs: read the license. AGPL means look only, never copy code. MIT can be copied with the notice
 
-## kinds of ref that have paid off
+## the row
 
-- high craft indie app pages, textures behind ui, pages alive without reveal on scroll.
-- liquid glass done well on the web, for chrome only.
-- section galleries for a single part of a page: navbar, hero, footer galleries.
-- a one inset sheet layout, a page with no nav at all, 3 percent grain, a restrained glass header pill.
-- the minimal pro tools people already trust (calm greys, one radius, weight 500 headings with negative tracking, 8 percent hairlines) when the ask is "clean, professional".
+one schema, in `brand.md` under `## sources`:
 
-## how to record a ref
+| surface | ref | how | evidence | date | values |
+|---|---|---|---|---|---|
+| people list | https://example.com/app | read | .claude/refs/example.com-2026-11-04 | 2026-11-04 | rows 40px, hairline alpha 0.08, Inter 14px |
 
-one line per ref, newest first, in the taste file (the brain if installed, `~/vault/taste/`, else `.claude/taste.md` in the repo):
+- **how:** `read` (ref-read ran), `user pic`, `user file`, or `unread`.
+- **evidence:** the folder or file it saved. `ref-check.mjs` fails a row whose evidence is missing.
 
-| date | ref | what it was for | the user's word | measured values or where they live |
-|---|---|---|---|---|
+the user's reaction to a ref goes into the taste file, verbatim and dated.
 
-"they sent" and "they liked" are the user's. "I picked" is yours and is marked as yours.
+## what past rounds teach
 
-## what past reactions teach
-
-- a first round that misses on fonts and background together means the refs were not read. go back to section 1 of the skill.
-- reveal on scroll and phone layouts squeezed from desktop get rejected on sight.
+- a first round that misses on fonts and background together means the refs were not read. go back to the brand and section 2 of the skill.
+- one ref per surface beats a mood board of ten. ten refs average into nothing.
+- a phone layout squeezed from desktop is rejected on sight.
 - a live shader background lost to a baked image of the same thing. premium reads calm.
-- many small cutouts scattered around read as clutter. keep two, by the thing that matters.
 - a first build full of info gets called useless. cut it to what is used.
-- simpler pages, aligned boxes, a readable round font, clean on first sight: the default ask for any dashboard.

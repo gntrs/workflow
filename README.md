@@ -118,12 +118,13 @@ these load on their own:
 
 ### design that doesn't look generated
 
-1. **references first.** it opens real products and measures them.
-2. **your brand.** it finds yours in the code, or builds a `brand.md` with you from three sites you like.
-3. **your words are the spec.** "this looks cheap" goes to the builder as "this looks cheap", not "refine the styling".
-4. **a reviewer predicts your no** before you look.
-5. **less.** every round ends with "what can still go?"
-6. **measured at every size.** [responsive-probe.js](tools/responsive-probe.js) catches sideways scroll, tiny text and buttons too small to tap.
+1. **your brand first.** it finds yours in the code, a doc or your live site and writes it into one short `brand.md`: colors, type, radius, voice, the parts your product already ships (button, field, card), who says yes to changes. new screens reuse those parts, so they repeat instead of drifting.
+2. **copied from real products, never invented.** every new screen takes its structure from one real product: your screenshots and files first, then the competitors and similar apps you name, or ones it searches for. `tools/ref-read.mjs` opens each one and saves screenshots and measured styles as evidence, and `tools/ref-check.mjs` fails a brand with no real reference behind it.
+3. **no brand?** five questions in one message: what it does and for whom, three words for the feel, what your users use today, one you don't want to look like, light or dark. then three live looks on a real screen, each copied from a real product. you pick one, that's the brand.
+4. **held to it.** `tools/brand-check.mjs` flags any color, font, radius or shadow that isn't in `brand.md`. something new goes in as proposed, never slipped in. an app whose screens already disagree gets `--audit` first: it counts every value in use, then [audit.md](skills/design/references/audit.md) turns them into one system.
+5. **your words are the spec.** "this looks cheap" goes to the builder as "this looks cheap", not "refine the styling".
+6. **a reviewer predicts your no** and checks the screen against your brand and its reference before you look.
+7. **less, and measured at every size.** every round ends with "what can still go?", and [responsive-probe.js](tools/responsive-probe.js) catches sideways scroll, tiny text and buttons too small to tap.
 
 ### it learns your taste
 

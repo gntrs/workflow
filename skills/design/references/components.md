@@ -1,12 +1,10 @@
 # components that hold up
 
-each one is a recipe. if the project already has the component in code, copy from the file, not from memory. values here are starting points; the project's `brand.md` wins.
+the mechanics of common parts: what breaks them and how big they must be. the look (colors, radius, blur amounts, sizes) comes from `brand.md` and from the ref for that surface, never from here. build a part only when the kit or the surface's ref has it; if the project already has the component in code, copy from the file. a value the brand lacks goes under its `## proposed`.
 
-## the glass header pill
+## a glass header, when the brand or the ref has one
 
-- one row, about 52px, one glass pill the width of the screen, brand left, main action right, links in the middle only from 900px. no nav row on phones.
-- restrained recipe: a near white at .84 alpha, `backdrop-filter: blur(12px) saturate(1.4)`, a hairline ring, one pixel of white along the top edge.
-- floating variant: `min(760px, 100%)` wide, white at .78, `saturate(1.6) blur(16px)`.
+- links in the middle only when they fit, no nav row on phones.
 - fixed, not sticky: a sticky element's backdrop is not the scrolling page in every engine, and the blur goes flat.
 - no `isolation` on it, an isolated element has nothing behind it to blur.
 - no band of transparent header above or below the pill, text would scroll through it.
@@ -22,19 +20,18 @@ each one is a recipe. if the project already has the component in code, copy fro
 ## segmented control with a sliding pill
 
 - the answer to separate tab buttons on a phone.
-- a quiet track, padding 4, radius 16; a pill radius 12 slides to the active item by `translateX(calc(var(--i) * 100%))` over `0.5s cubic-bezier(.32,.72,0,1)`.
-- buttons at least 44px tall. labels muted ink, full ink when on.
+- a pill slides to the active item by `translateX(calc(var(--i) * 100%))`, with the brand's ease.
+- buttons at least 44px tall on phones. labels muted ink, ink when on.
 - a 32px design system segment fails the phone gate as written. make the hit area 44.
 
 ## cards, radius, inset
 
-- one radius, one inset, one title row and gap. cards in a row are one height; a visible mismatch reads as broken, aim for under 1px.
-- radius is per project, not one global value. small reads editorial, 12 to 20 reads app.
+- the brand's radius and inset, one title row and gap. cards in a row match height to under 1px.
 - no full width card holding everything. separate cards read better.
 
 ## data ui: hairlines, not pills
 
-- selected tab is an ink outline. lists are rows on a hairline.
+- selected tab is an ink outline or the accent, never both. lists are rows on a hairline.
 - parts of a board lose their cards: a hairline plus a label so tops line up, no shadows.
 - table rows: hairlines, no zebra.
 - spec rows: mono term in muted ink, sans detail in ink, hairline between.
@@ -42,6 +39,6 @@ each one is a recipe. if the project already has the component in code, copy fro
 
 ## buttons
 
-- primary: accent fill, ink or white text by measured contrast, 44px, one per screen.
+- primary: accent fill, accent ink text, 44px, one per screen.
 - hover lifts 1px, `:active` `scale(.97)` placed after the hover rules so a press wins. hover inside `@media (hover: hover)`.
-- 40px visual is fine with a 44px hit area via a `::before` inset.
+- a 40px look goes inside a 44px box with padding. a `::before` hit area is invisible to the probe, so it fails the sweep.

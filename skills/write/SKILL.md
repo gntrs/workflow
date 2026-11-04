@@ -11,7 +11,7 @@ plainer than anything a model writes by default. one register for everything a p
 
 commit messages: `playbook` `references/deploy.md`.
 
-every reaction the user gives to copy ("sounds like ai", "too long", "this, exactly") goes into the taste file under `## copy`, verbatim and dated, the way `design` section 3b logs it. the same complaint twice is a rule for this user.
+every reaction the user gives to copy ("sounds like ai", "too long", "this, exactly") goes into the taste file under `## copy`, verbatim and dated, the way `design` section 4 logs it. the same complaint twice is a rule for this user.
 
 ## the register
 

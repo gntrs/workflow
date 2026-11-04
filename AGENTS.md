@@ -16,7 +16,7 @@ git clone --depth 1 https://github.com/gntrs/workflow.git ~/.claude/workflow
 
 ## you are working on this repo itself
 
-markdown skills, one rules file, two installers and one probe script. no build.
+markdown skills, one rules file, two installers and five scripts (the size probe, its runner, the brand check, the ref reader, the ref check). no build.
 
 - skills live in `skills/<name>/SKILL.md`, depth in `skills/<name>/references/`. frontmatter `name` matches the folder.
 - `rules/RULES.md` is always on. a skill never contradicts it.
@@ -24,6 +24,8 @@ markdown skills, one rules file, two installers and one probe script. no build.
 - lowercase, direct prose. zero em dashes.
 - `bash scripts/check.sh` before you hand back. it must print `ok`. put your own private strings in `.claude/denylist.txt` (gitignored, one regex per line) and it scans for them too.
 - after changing `tools/responsive-probe.js`, run `node tools/probe-test.mjs` (needs playwright with chromium: `npx playwright install chromium`, or point `PLAYWRIGHT_MODULE` at an installed copy) and show it still catches the planted cases.
+- after changing `tools/brand-check.mjs`, run `node tools/brand-check.mjs --self-test` and show every line passes.
+- after changing `tools/ref-read.mjs` or `tools/ref-check.mjs`, run their `--self-test` and show every line passes. ref-read's needs playwright like the probe runner.
 - after changing an installer, run it into a throwaway home: `HOME=$(mktemp -d) bash install.sh --yes --dry-run`, then without `--dry-run`, twice.
 
 ## the rules that hold here too

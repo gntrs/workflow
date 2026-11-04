@@ -64,7 +64,7 @@ report what was run, not what was read. a careful reading is not a green test ru
 
 ## responsiveness is measured, not eyeballed
 
-**every substantial piece of front end work ends with the size sweep before it is called done.** lay the app out in a real browser at each target size and measure it: page overflow, any target under 44 px, any control outside the screen with no scroller between it and the page.
+**every substantial piece of front end work ends with the size sweep before it is called done.** lay the app out in a real browser at each target size and measure it: page overflow, any target under 44 px on a phone width (24 px above 640), any control outside the screen with no scroller between it and the page.
 
 a screenshot of one maximised window proves nothing about the other sizes, and resizing a maximised window is silently ignored. measure inside an exact size iframe.
 

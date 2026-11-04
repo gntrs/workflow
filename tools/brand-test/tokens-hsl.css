@@ -1,0 +1,5 @@
+/* shadcn on tailwind v3: bare hsl channels. --primary is in brand.md, --accent was changed and is not */
+:root {
+  --primary: 222.2 47.4% 11.2%;
+  --accent: 330 90% 55%;
+}
