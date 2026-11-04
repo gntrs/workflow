@@ -48,15 +48,17 @@ Do-It "create $Claude\skills and tools" { New-Item -ItemType Directory -Force -P
 # 1. rules
 $rules = Join-Path $Claude 'RULES.md'
 if (-not (Same (Join-Path $Src 'rules\RULES.md') $rules)) {
-  if (Test-Path $rules) { Do-It "back up RULES.md" { Copy-Item $rules "$rules.bak-$Stamp" } }
-  Do-It "copy RULES.md" { Copy-Item (Join-Path $Src 'rules\RULES.md') $rules -Force }
+  if (Test-Path $rules) { Do-It "back up $rules" { Copy-Item $rules "$rules.bak-$Stamp" } }
+  Do-It "copy RULES.md to $rules" { Copy-Item (Join-Path $Src 'rules\RULES.md') $rules -Force }
   $Did += 'RULES.md'
 }
 
 # 2. the import line, appended
 $cm = Join-Path $Claude 'CLAUDE.md'
 if (-not (Test-Path $cm) -or -not (Select-String -Path $cm -SimpleMatch -Pattern '@RULES.md' -Quiet)) {
-  Do-It "append @RULES.md to CLAUDE.md" { Add-Content -Path $cm -Value "`n@RULES.md" }
+  # a fresh file gets the line alone, an existing one gets it on a new line
+  $lead = if ((Test-Path $cm) -and (Get-Item $cm).Length -gt 0) { "`r`n" } else { '' }
+  Do-It "append @RULES.md to $cm" { Add-Content -Path $cm -Value "$lead@RULES.md" }
   $Did += 'CLAUDE.md: @RULES.md'
 }
 
@@ -72,7 +74,7 @@ Get-ChildItem (Join-Path $Src 'skills') -Directory | ForEach-Object {
     } else { $script:Skipped += "skills\$name (exists, use -Force)"; return }
   }
   $from = $_.FullName
-  Do-It "copy skills\$name" { Copy-Item $from $dest -Recurse }
+  Do-It "copy skills\$name to $dest" { Copy-Item $from $dest -Recurse }
   $script:Did += "skills\$name"
 }
 
@@ -81,7 +83,7 @@ foreach ($t in 'responsive-probe.js','probe-test.mjs','brand-check.mjs','ref-rea
   $to = Join-Path $Claude "tools\$t"
   $from = Join-Path $Src "tools\$t"
   if (-not (Same $from $to)) {
-    Do-It "copy $t" { Copy-Item $from $to -Force }
+    Do-It "copy $t to $to" { Copy-Item $from $to -Force }
     $Did += "tools\$t"
   }
 }
@@ -105,7 +107,7 @@ if ($Pstack) {
       $tag = (Select-String -Path (Join-Path $Src 'pstack\install.sh') -Pattern '^TAG="(.+)"').Matches[0].Groups[1].Value
       claude plugin marketplace add "https://github.com/ericlitman/open-pstack.git#$tag"
       claude plugin install pstack@open-pstack
-      if (-not (Select-String -Path $cm -SimpleMatch -Pattern '@skills/pstack/models.md' -Quiet)) { Add-Content -Path $cm -Value "`n@skills/pstack/models.md" }
+      if (-not (Select-String -Path $cm -SimpleMatch -Pattern '@skills/pstack/models.md' -Quiet)) { Add-Content -Path $cm -Value "`r`n@skills/pstack/models.md" }
     }
     $Did += 'pstack'
   } else { $Skipped += 'pstack plugin: no claude cli on PATH' }
@@ -119,6 +121,7 @@ if ($Brain) {
 }
 
 Write-Host ""
-Write-Host ("installed: " + $(if ($Did.Count) { $Did -join ', ' } else { 'nothing new' }))
+$label = if ($DryRun) { 'would install: ' } else { 'installed: ' }
+Write-Host ($label + $(if ($Did.Count) { $Did -join ', ' } else { 'nothing new' }))
 if ($Skipped.Count) { Write-Host ("skipped: " + ($Skipped -join '; ')) }
 Write-Host "next: restart claude code, then type /cook <a real task>."
