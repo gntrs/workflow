@@ -1,10 +1,8 @@
 # components that hold up
 
-the mechanics of common parts: what breaks them and how big they must be. the look (colors, radius, blur amounts, sizes) comes from `brand.md` and from the ref for that surface, never from here. build a part only when the kit or the surface's ref has it; if the project already has the component in code, copy from the file. a value the brand lacks goes under its `## proposed`.
+the mechanics of common parts: what breaks them and how big they must be. the look (colors, radius, blur amounts, sizes) comes from `brand.md` and from the ref for that surface, never from here. build a part only when the kit or the surface's ref has it; if the project already has the component in code, copy from the file. a value the brand lacks goes under its `## proposed`. liquid glass components (glisse) only when the user asks: [glass.md](glass.md).
 
 ## a glass header, when the brand or the ref has one
-
-- liquid glass components (glisse) only when the user asks: [glass.md](glass.md).
 
 - links in the middle only when they fit, no nav row on phones.
 - fixed, not sticky: a sticky element's backdrop is not the scrolling page in every engine, and the blur goes flat.
