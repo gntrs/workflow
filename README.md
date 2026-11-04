@@ -126,6 +126,8 @@ these load on their own:
 6. **a reviewer predicts your no** and checks the screen against your brand and its reference before you look.
 7. **less, and measured at every size.** every round ends with "what can still go?", and [responsive-probe.js](tools/responsive-probe.js) catches sideways scroll, tiny text and buttons too small to tap.
 
+want apple's liquid glass on one screen? ask for glisse by name. it is never added on its own, and it stays on the screen you asked for. [glass.md](skills/design/references/glass.md)
+
 ### it learns your taste
 
 every reaction you give goes into a taste file, word for word, dated, with what it was about. the next screen is built and reviewed against it. say the same thing twice and it becomes a rule. no taste file yet: the first design task asks three things, what you love, what you hate, and one site you'd copy. [the template](brain-template/taste/taste.md)
@@ -147,6 +149,7 @@ say yes in setup and you get `~/vault`, an obsidian folder where every repo keep
 ## credits
 
 - [pstack](https://github.com/ericlitman/open-pstack) (mit) is the engine underneath. optional, installed as a plugin, never copied in.
+- [glisse](https://github.com/0kzh/glisse) (mit) is the liquid glass the design skill uses when you ask for it. never installed on its own.
 - the slow cook follows dex horthy's talk "no vibes allowed": the context window is the lever, so progress goes into files.
 - the font is [figtree](https://github.com/erikdkennedy/figtree) (sil open font license, [assets/fonts/OFL.txt](assets/fonts/OFL.txt)).
 
