@@ -128,7 +128,7 @@ depth: [references/tokens.md](references/tokens.md), [references/motion.md](refe
 
 ## done means
 
-the full sweep is clean, the brand check has no hits (proposed values aside), `ref-check.mjs --ship` is clean, every surface matches the structure of its ref, every `## proposed` value is flagged to the owner, no element outside the kit without the owner's yes, every new screen draws its four states, the screenshots were looked at, the reviewer's findings are fixed or argued, and the user has a numbered hand test: what to open, at which size, what they should see, what would mean it is broken. what headless cannot see (real phone toolbars, how motion feels) is labelled unseen.
+the full sweep is clean, the brand check has no hits (proposed values aside), `ref-check.mjs --ship` is clean, every surface matches the structure of its ref, every `## proposed` value is flagged to the owner, no element outside the kit without the owner's yes, every new screen draws its four states, the screenshots were looked at, a scroll story or a wheel or drag scene that goes out with the work (a pr, a launch post) has a recording (`record.mjs`) that was looked at, the reviewer's findings are fixed or argued, and the user has a numbered hand test: what to open, at which size, what they should see, what would mean it is broken. what headless cannot see (real phone toolbars, how motion feels) is labelled unseen.
 
 ## references
 
@@ -144,7 +144,7 @@ the full sweep is clean, the brand check has no hits (proposed values aside), `r
 | [references/components.md](references/components.md) | the mechanics of common parts: hit boxes, segmented control, glass, cards, buttons, data rows |
 | [references/glass.md](references/glass.md) | liquid glass with glisse, only on the user's request, and how it fits the kit, refs and sweep |
 | [references/motion.md](references/motion.md) | scrubbed scroll, one spring, eases, reduced motion, shaders as accent only |
-| [references/verify.md](references/verify.md) | the two tier check, the probe, the brand check, thresholds, contrast, browser traps |
+| [references/verify.md](references/verify.md) | the two tier check, the probe, the brand check, the recording, thresholds, contrast, browser traps |
 | [references/assets.md](references/assets.md) | generated renders, cutouts, icons, sizes |
 
 when a rule here and a fresh word from the user disagree, the user's word wins. write it down dated in the taste file.

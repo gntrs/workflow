@@ -1,4 +1,4 @@
-# verify: two tiers, the probe, the brand check, the ref check, thresholds, contrast, browser traps
+# verify: two tiers, the probe, the brand check, the ref check, the recording, thresholds, contrast, browser traps
 
 front end work is not done until it is measured. say which numbers were measured and which were inferred, every time.
 
@@ -7,7 +7,7 @@ front end work is not done until it is measured. say which numbers were measured
 | tier | when | what | budget |
 |---|---|---|---|
 | fast | before every preview, after every builder lands | build passes, the main flow works, the probe at 3 sizes (320x690, 390x844, 1440x900), the brand check on the changed files, `ref-check.mjs`, no console errors | under 5 minutes |
-| full | before ship | every size in `SIZES`, chromium and webkit, every screen and state walked, the 12 px floor, console errors, the brand check on every file the work touched, `ref-check.mjs --ship`, screenshots looked at | as long as it takes |
+| full | before ship | every size in `SIZES`, chromium and webkit, every screen and state walked, the 12 px floor, console errors, the brand check on every file the work touched, `ref-check.mjs --ship`, screenshots looked at, a recording of a scroll story or scene that goes out with the work | as long as it takes |
 
 the fast tier is what makes small, frequent previews possible. running the full sweep on every one pixel change is what makes iteration slow.
 
@@ -61,6 +61,23 @@ text and controls at opacity 0 (a reveal on scroll that has not run) are counted
 - a `## components` row has no `from`, or its `from` is neither an existing file nor a `## sources` surface or ref
 
 with `--ship` it also fails `status: default, not chosen`. `node tools/ref-check.mjs --self-test` and `node tools/ref-read.mjs --self-test`, in a clone of the workflow repo, prove both still work.
+
+## the recording
+
+a screenshot cannot show a scroll story or a scene that moves on wheel or drag. a video can. `node ~/.claude/tools/record.mjs <url>` records one, for the real run and for anything that goes out with the work (a pr, a launch post). it walks by wheel and drag only: clicks, hovers and transitions they start are not recorded unless a person drives them.
+
+- **what it does:** opens the url at 2x, waits for the page to settle, walks it, and takes every new frame from the chrome devtools screencast as a jpeg. ffmpeg turns them into a constant 30 fps mp4 at the real speed. then it reads the video back: length, blank frames, whether the picture moved.
+- **the default walk:** the wheel at `--pace` px a second (500), sent every 16 ms. a page that scrolls is walked to its bottom. a page that does not (`scrollHeight` equal to the window, a scene that moves on wheel events) gets wheel until the picture stops moving, or `--seconds` (40) at most. a box with its own scroller that opens on the way (a board, a modal) goes back to its top and the walk ends there.
+- **a shot:** `--shot "drag 300,0 2s; wheel 1200 3s; hold 2s; wheel -1200 3s"` circles a scene, wheels in, holds, wheels back out. `drag x,y`, `wheel px` (negative goes up) and `hold`, each with a time. a box that opens while wheeling in stays at its top here too.
+- **cookie banners:** only a button inside a fixed, sticky or dialog box on screen that talks about cookies, consent, privacy or tracking, and only reject, decline, opt out or necessary only. never accept, never a link that leaves the page. a banner that comes back mid walk gets the same answer. landing anywhere but the url asked for is printed as a warning.
+- **sizes:** `--size mac` (1440x900, the default), `--size phone` (390x844) or any `WxH`.
+- **files:** `.claude/videos/<host>-<path>-<size>-<date>-<hhmm>.mp4`, or `--out <dir>`. a query adds a short hash to the name and a second take in the same minute gets `-2`, so nothing is overwritten. the master is 2x, 1920 wide at most. next to it, `-web.mp4` at the window size, kept under 10 MB (github's limit for a video) when it can be. both sizes are printed, and a master over 10 MB says to use the web copy.
+- **without ffmpeg:** it says so and falls back to playwright's own video, a `.webm` at about 1 Mbps vp8 that starts at the blank load. fine as proof, soft for a launch post. it never installs anything.
+- **what it prints:** frames a second from the screencast, and the real px a second against `--pace`.
+- **exit codes:** 0 the video moves. 1 written but frozen: no scroll and every sampled frame the same, so it proves nothing. 2 a usage error, no browser, or a page that will not open or answers 400 or more.
+- **webgl:** chromium's new headless mode, in the full chromium build, draws on the gpu. with only the headless shell installed it falls back to software gl (swiftshader), slow on a heavy scene, and prints which one it used. `npx playwright install chromium` gets the full build.
+- **look at it.** pull a few frames (`ffmpeg -ss 5 -i x.mp4 -frames:v 1 f.png`) and read them before you say it works. the numbers say it moved, not that it looks right.
+- `node tools/record.mjs --self-test`, in a clone of the workflow repo, records a long page with a planted cookie banner, a wheel scene that opens a scrolling panel, the same scene with a shot, a page with an opt out link in its footer and a page where nothing moves, and checks each video.
 
 ## coverage, or the sweep lies
 

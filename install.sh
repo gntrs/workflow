@@ -92,13 +92,13 @@ for dir in "$SRC"/skills/*/; do
   run cp -R "$dir" "$dest"; did+=("skills/$name")
 done
 
-# 4. the size sweep probe, its runner, the brand check, and the ref reader and its gate
-for t in responsive-probe.js probe-test.mjs brand-check.mjs ref-read.mjs ref-check.mjs; do
+# 4. the size sweep probe, its runner, the brand check, the ref reader and its gate, and the recorder
+for t in responsive-probe.js probe-test.mjs brand-check.mjs ref-read.mjs ref-check.mjs record.mjs; do
   same "$SRC/tools/$t" "$CLAUDE_DIR/tools/$t" || { run cp "$SRC/tools/$t" "$CLAUDE_DIR/tools/"; did+=("tools/$t"); }
 done
 
 # 5. optional: keep the per repo notes files out of every repo. exact paths, never all of .claude/
-NOTES=".claude/CLAUDE.md .claude/log.md .claude/tbd.md .claude/taste.md .claude/brand.md .claude/plans/ .claude/research/ .claude/sql/ .claude/run/"
+NOTES=".claude/CLAUDE.md .claude/log.md .claude/tbd.md .claude/taste.md .claude/brand.md .claude/plans/ .claude/research/ .claude/sql/ .claude/run/ .claude/videos/"
 if [ "$GITIGNORE" = 1 ] && command -v git >/dev/null; then
   gi="$(git config --global core.excludesFile || true)"
   [ -z "$gi" ] && gi="$HOME/.gitignore_global"

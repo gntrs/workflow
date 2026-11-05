@@ -125,6 +125,7 @@ these load on their own:
 5. **your words are the spec.** "this looks cheap" goes to the builder as "this looks cheap", not "refine the styling".
 6. **a reviewer predicts your no** and checks the screen against your brand and its reference before you look.
 7. **less, and measured at every size.** every round ends with "what can still go?", and [responsive-probe.js](tools/responsive-probe.js) catches sideways scroll, tiny text and buttons too small to tap.
+8. **a video of the real run.** [record.mjs](tools/record.mjs) records a scroll, wheel or drag walk to a video and checks it moved.
 
 want apple's liquid glass on one screen? ask for glisse by name. it is never added on its own, and it stays on the screen you asked for. [glass.md](skills/design/references/glass.md)
 
