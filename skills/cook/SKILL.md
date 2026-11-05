@@ -90,7 +90,7 @@ as the work moves, keep one entry at the top of the repo tbd under `## cooking`:
 ## 7. the ending, every lane
 
 1. **branch.** `feat/`, `fix/` or `chore/` plus a kebab topic, off main. starting it needs no ask.
-2. **real run, full tier.** the change seen working in the app, not just tests, then the full verify tier. say what was run and what was only read.
+2. **real run, full tier.** the change seen working in the app, not just tests, then the full verify tier. say what was run and what was only read. a scroll story or a wheel or drag scene that goes out with the work (a pr, a launch post) gets a video: `node ~/.claude/tools/record.mjs <url>` (`--shot` for a drag), frames pulled and looked at, the path in the /ship block.
 3. **hand test plan.** numbered: what to click or run, what they should see, what means broken. check which app owns a localhost port (`lsof -iTCP:<port> -sTCP:LISTEN`) before naming it.
 4. **size sweep and brand check** if front end: `node ~/.claude/tools/probe-test.mjs <url> [paths]` at every target size (overflow, targets under 44 px, stranded controls), and `node ~/.claude/tools/brand-check.mjs <brand.md>` on the changed files when the project has a `brand.md` (at the root, in `.claude/`, or in the brain at `~/vault/projects/<repo>/brand.md`).
 5. **notes.** a newest first entry in the log, the tbd updated, the `## cooking` entry closed, traps added to `.claude/CLAUDE.md`. the brain if installed (`~/vault/projects/<repo>/`), else `.claude/`.
