@@ -75,7 +75,7 @@ a screenshot cannot show a scroll story or a scene that moves on wheel or drag. 
 - **without ffmpeg:** it says so and falls back to playwright's own video, a `.webm` at about 1 Mbps vp8 that starts at the blank load. fine as proof, soft for a launch post. it never installs anything.
 - **what it prints:** frames a second from the screencast, and the real px a second against `--pace`.
 - **exit codes:** 0 the video moves. 1 written but frozen: no scroll and every sampled frame the same, so it proves nothing. 2 a usage error, no browser, or a page that will not open or answers 400 or more.
-- **webgl:** chromium's new headless mode, in the full chromium build, draws on the gpu. with only the headless shell installed it falls back to software gl (swiftshader), slow on a heavy scene, and prints which one it used. `npx playwright install chromium` gets the full build.
+- **webgl:** chromium's new headless mode, in the full chromium build, draws on the gpu, on linux through the system's egl driver. with only the headless shell installed, or no gpu driver or device on linux, it falls back to software gl (swiftshader), slow on a heavy scene, and prints which one it used. `npx playwright install chromium` gets the full build.
 - **look at it.** pull a few frames (`ffmpeg -ss 5 -i x.mp4 -frames:v 1 f.png`) and read them before you say it works. the numbers say it moved, not that it looks right.
 - `node tools/record.mjs --self-test`, in a clone of the workflow repo, records a long page with a planted cookie banner, a wheel scene that opens a scrolling panel, the same scene with a shot, a page with an opt out link in its footer and a page where nothing moves, and checks each video.
 

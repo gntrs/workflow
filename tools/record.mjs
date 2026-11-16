@@ -23,8 +23,9 @@
 //     starts at the blank load. fine as proof, soft for a launch post. it never installs anything.
 //     then it reads the video back and samples frames: length, blank frames (one flat color), whether the
 //     picture moved. it prints frames a second from the screencast, and the real px a second against --pace.
-//     webgl: chromium's new headless mode draws on the gpu. where only the headless shell is installed it
-//     falls back to software gl (swiftshader), which is slow on a heavy scene, and says so.
+//     webgl: chromium's new headless mode draws on the gpu (on linux through the system's egl driver). where
+//     only the headless shell is installed, or linux has no gpu driver or device, it falls back to software
+//     gl (swiftshader), which is slow on a heavy scene, and says so.
 //     exits 0 when the video moves, 1 when it was written but nothing moved (no scroll, every frame the
 //     same: a frozen recording), 2 on a usage error, a browser that will not start or a page that will not
 //     open (or answers 400 or more).
@@ -53,6 +54,7 @@ const USAGE = 'usage: node record.mjs <url> [--size mac | phone | WxH] [--shot "
 const SIZES = { mac: [1440, 900], phone: [390, 844] };
 const FPS = 30, MAX_EDGE = 1920, LIMIT = 10 * 1024 * 1024;
 const SOFT_GL = ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'];
+const LINUX_GPU = ['--ignore-gpu-blocklist', '--use-gl=angle', '--use-angle=gl-egl'];
 
 function die(msg) { console.error(msg); process.exit(2); }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -62,6 +64,22 @@ const hhmm = () => { const d = new Date(); return `${pad(d.getHours())}${pad(d.g
 const shown = (p) => { const r = relative(process.cwd(), p); return r && !r.startsWith('..') ? r : p; };
 const mb = (bytes) => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 const even = (n) => Math.round(n / 2) * 2;
+
+const SOFTWARE = /swiftshader|llvmpipe|softpipe|lavapipe/i;
+// which launch won: 'gpu' (linux, through egl), 'full' (the full chromium build) or 'shell' (the headless shell).
+let launched = null;
+
+async function drawsOnGpu(browser) {
+  const page = await browser.newPage();
+  try {
+    const gl = await page.evaluate(() => {
+      const g = document.createElement('canvas').getContext('webgl');
+      const e = g && g.getExtension('WEBGL_debug_renderer_info');
+      return e ? g.getParameter(e.UNMASKED_RENDERER_WEBGL) : '';
+    });
+    return !!gl && !SOFTWARE.test(gl);
+  } catch { return false; } finally { await page.close().catch(() => {}); }
+}
 
 // copied from probe-test.mjs on purpose: the installer copies single files, so no shared module.
 async function launchBrowser({ headed = false } = {}) {
@@ -86,8 +104,18 @@ async function launchBrowser({ headed = false } = {}) {
   for (const pw of found) {
     // new headless (the full chromium build) draws webgl on the gpu. the headless shell has software gl only.
     // the screencast sends css pixels unless the whole browser runs at 2x, so the scale is forced at launch.
-    for (const opts of [{ channel: 'chromium', args: ['--force-device-scale-factor=2'] }, { args: ['--force-device-scale-factor=2', ...SOFT_GL] }]) {
-      try { return await pw.chromium.launch({ headless: !headed, ...opts }); } catch (e) { last = e; }
+    // on linux new headless still picks software gl unless angle is pointed at the system's egl driver, so that
+    // is tried first there and kept only when webgl draws on a real gpu with it. a headed window already does.
+    const scale = '--force-device-scale-factor=2';
+    const tries = [...(process.platform === 'linux' && !headed ? [{ won: 'gpu', channel: 'chromium', args: [scale, ...LINUX_GPU] }] : []),
+      { won: 'full', channel: 'chromium', args: [scale] }, { won: 'shell', args: [scale, ...SOFT_GL] }];
+    for (const { won, ...opts } of tries) {
+      try {
+        const browser = await pw.chromium.launch({ headless: !headed, ...opts });
+        if (won === 'gpu' && !(await drawsOnGpu(browser))) { await browser.close(); continue; }
+        launched = won;
+        return browser;
+      } catch (e) { last = e; }
     }
   }
   die(`could not start chromium with any playwright found (npx playwright install chromium in your project): ${String(last && last.message || last).split('\n')[0]}`);
@@ -498,7 +526,7 @@ function line(r, pace) {
 function warnings(r, log) {
   if (r.note) log(`record: ${r.note}`);
   if (r.left) log(`record: landed on ${r.landed}, not the url asked for. the video may show the wrong page`);
-  if (/swiftshader/i.test(r.gl)) log('record: webgl is software (swiftshader) here, so a heavy scene records slowly. `npx playwright install chromium` gets the full build that draws on the gpu');
+  if (SOFTWARE.test(r.gl)) log(`record: webgl is software here, so a heavy scene records slowly. ${launched === 'shell' ? '`npx playwright install chromium` gets the full build that draws on the gpu' : process.platform === 'linux' ? 'no gpu driver or device was found (a container, ci or a vm)' : 'the full build found no gpu to draw on'}`);
   if (r.bytes > LIMIT) log(`record: the master is ${mb(r.bytes)}, over github's 10 MB for a video. ${r.web ? `use the -web copy (${mb(r.webBytes)})` : 'trim it or shorten the walk'}`);
   if (r.web && r.webBytes > LIMIT) log(`record: the web copy is still ${mb(r.webBytes)}. shorten the walk with --seconds or --shot`);
   if (r.check.blank) log(`record: ${r.check.blank} of ${r.check.sampled} sampled frames are one flat color. a scene that will not draw: try --headed`);
@@ -530,7 +558,7 @@ async function selfTest() {
     ok(a.mode === 'page' && a.scrolled >= a.max - 2 && a.max > 2000, `a long page is scrolled to its bottom: ${a.scrolled} of ${a.max} px`);
     ok(a.check.endsDiffer && a.check.moving >= 2, `the picture moves: first and last frame differ, ${a.check.moving} of ${a.check.steps} steps moving`);
     ok(a.speed > 800 * 0.8 && a.speed < 800 * 1.2, `the walk keeps its pace: ${a.speed} px/s against --pace 800`);
-    ok(a.fps >= 20, `smooth: ${a.fps.toFixed(1)} frames/s came from the screencast while it scrolled`);
+    ok(a.fps >= 20, `smooth: ${a.fps.toFixed(1)} frames/s came from the screencast while it scrolled (gl ${a.gl}${SOFTWARE.test(a.gl) ? ', software: a slow machine fails this line, not the tool' : ''})`);
     ok(a.banner === 'Reject all', `the cookie banner got reject, not accept or settings: pressed "${a.banner}"`);
     const panel = () => ({ progress: window.__progress, top: document.getElementById('panel').scrollTop, open: document.getElementById('panel').style.display === 'block', drag: window.__drag, max: window.__maxProgress });
     const b = await record(browser, `${base}/scene.html`, { seconds: 15, pace: 800, out: tmp, ffmpeg: null, probe: panel, log: quiet });
