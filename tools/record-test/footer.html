@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>a page with an opt out link in its footer</title>
+<style>
+  body { margin: 0; font: 20px system-ui, sans-serif; }
+  section { height: 900px; display: grid; place-items: center; color: #fff; font-size: 160px; }
+  section::after { content: ''; width: 300px; height: 300px; background: #fff; }
+  section:nth-child(odd) { background: #1f6feb; } section:nth-child(even) { background: #2da44e; }
+  footer { padding: 24px; background: #111; color: #eee; } footer a { color: #9cf; margin-right: 16px; }
+</style></head>
+<body>
+  <main><section>one</section><section>two</section><section>three</section></main>
+  <!-- no banner here. the footer talks about privacy and has an opt out link that leaves the page: never pressed -->
+  <footer><p>we respect your privacy. read our privacy policy and terms.</p><a href="/left.html">Opt out of sale</a><a href="/terms">terms</a></footer>
+</body></html>

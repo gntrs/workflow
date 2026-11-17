@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>a wheel driven scene</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0b0b10; font: 18px system-ui, sans-serif; }
+  #dot { position: absolute; top: 40%; left: 0; width: 160px; height: 160px; border-radius: 50%; background: #f5a623; }
+  #sky { position: absolute; inset: 0; }
+  #ring { position: absolute; top: 15%; left: 45%; width: 120px; height: 24px; background: #3fb950; transform-origin: 50% 50%; }
+  #panel { position: fixed; inset: 10% 15%; background: #fff; overflow-y: auto; display: none; }
+  #panel h2 { margin: 0; padding: 16px; background: #1f6feb; color: #fff; }
+  #panel li { height: 80px; border-bottom: 1px solid #ddd; }
+</style></head>
+<body>
+  <!-- the page never scrolls: wheel events move the scene, the way a scroll story with its own wheel handler does.
+       dragging turns the green bar (a camera you circle). at the end of the scene a panel with its own scroller opens:
+       the recorder must not wheel through it past its header. -->
+  <div id="sky"></div><div id="ring"></div><div id="dot"></div>
+  <div id="panel"><h2>the board</h2><ul id="list"></ul></div>
+  <!-- not a cookie banner: the recorder must leave this link alone -->
+  <a id="news" href="#" style="position: absolute; bottom: 16px; left: 16px; color: #fff">Opt out of the newsletter</a>
+  <script>
+    window.__progress = 0; window.__maxProgress = 0; window.__drag = 0;
+    const panel = document.getElementById('panel');
+    for (let i = 0; i < 40; i++) document.getElementById('list').append(Object.assign(document.createElement('li'), { textContent: `row ${i + 1}` }));
+    addEventListener('wheel', (e) => {
+      if (panel.contains(e.target)) return; // the open panel scrolls itself
+      e.preventDefault();
+      window.__progress = Math.min(1, Math.max(0, window.__progress + e.deltaY / 4000));
+      window.__maxProgress = Math.max(window.__maxProgress, window.__progress);
+      panel.style.display = window.__progress >= 1 ? 'block' : 'none';
+    }, { passive: false });
+    let down = null;
+    addEventListener('pointerdown', (e) => { down = e.clientX; });
+    addEventListener('pointermove', (e) => { if (down !== null) { window.__drag += Math.abs(e.clientX - down); down = e.clientX; } });
+    addEventListener('pointerup', () => { down = null; });
+    const dot = document.getElementById('dot'), sky = document.getElementById('sky'), ring = document.getElementById('ring');
+    (function tick() {
+      const p = window.__progress;
+      dot.style.transform = `translateX(${p * (innerWidth - 160)}px)`;
+      sky.style.background = `rgb(${11 + p * 60}, ${11 + p * 90}, ${16 + p * 160})`;
+      ring.style.transform = `rotate(${window.__drag}deg)`;
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body></html>

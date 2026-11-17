@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>a long page with a cookie banner</title>
+<style>
+  body { margin: 0; font: 20px/1.5 system-ui, sans-serif; }
+  section { height: 700px; display: grid; place-items: center; font-size: 48px; color: #fff; }
+  section:nth-child(1) { background: #1f6feb; } section:nth-child(2) { background: #2da44e; }
+  section:nth-child(3) { background: #bf3989; } section:nth-child(4) { background: #d4a72c; }
+  section:nth-child(5) { background: #222; }
+  .banner { position: fixed; left: 16px; right: 16px; bottom: 16px; background: #fff; color: #111; padding: 16px; display: flex; gap: 12px; align-items: center; box-shadow: 0 2px 12px #0004; }
+  .banner button { font: inherit; padding: 8px 16px; }
+</style></head>
+<body>
+  <main>
+    <section>one</section><section>two</section><section>three</section><section>four</section><section>five</section>
+  </main>
+  <!-- the planted banner: the recorder must press reject, never accept -->
+  <div class="banner" id="banner">
+    <span>we use cookies.</span>
+    <button id="accept">Accept all</button>
+    <button id="settings">Settings</button>
+    <button id="reject">Reject all</button>
+  </div>
+  <script>
+    window.__consent = 'none';
+    for (const [id, v] of [['accept', 'accepted'], ['reject', 'rejected'], ['settings', 'settings']]) {
+      document.getElementById(id).onclick = () => { window.__consent = v; document.getElementById('banner').remove(); };
+    }
+  </script>
+</body></html>

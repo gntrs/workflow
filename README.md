@@ -126,6 +126,7 @@ these load on their own:
 6. **a reviewer predicts your no** and checks the screen against your brand and its reference before you look.
 7. **two no's, three new pages.** a screen rejected twice is not patched again: three builders try three different layouts, a reviewer picks one and fixes what you'd still reject, you see one.
 8. **less, and measured at every size.** every round ends with "what can still go?", and [responsive-probe.js](tools/responsive-probe.js) catches sideways scroll, tiny text and buttons too small to tap.
+9. **a video of the real run.** [record.mjs](tools/record.mjs) records a scroll, wheel or drag walk to a video and checks it moved.
 
 want apple's liquid glass on one screen? ask for glisse by name. it is never added on its own, and it stays on the screen you asked for. [glass.md](skills/design/references/glass.md)
 

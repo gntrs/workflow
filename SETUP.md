@@ -70,7 +70,7 @@ say what you ran, not what you read.
 
 1. `ls ~/.claude/skills` lists every skill you installed.
 2. `grep -n '@RULES.md' ~/.claude/CLAUDE.md` shows the import.
-3. `ls ~/.claude/tools/responsive-probe.js ~/.claude/tools/probe-test.mjs ~/.claude/tools/brand-check.mjs ~/.claude/tools/ref-read.mjs ~/.claude/tools/ref-check.mjs` lists all five.
+3. `ls ~/.claude/tools/responsive-probe.js ~/.claude/tools/probe-test.mjs ~/.claude/tools/brand-check.mjs ~/.claude/tools/ref-read.mjs ~/.claude/tools/ref-check.mjs ~/.claude/tools/record.mjs` lists all six.
 4. pstack yes: `claude plugin list` shows pstack.
 5. brain yes: `ls ~/vault` shows `HOME.md`, `now.md`, `projects/`.
 
