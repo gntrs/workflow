@@ -41,9 +41,9 @@ the steps:
 
 1. **stop.** no third patch. say so in one line and start over.
 2. **what it is for, in the user's words.** the one message where they say what they do with the thing, pasted whole. their core loop becomes the page. if they never said it, ask that one question.
-3. **one brief in a file,** read by every builder and the reviewer: what it is for, every reaction verbatim, the rejected screenshots by path and named as rejected, your read of why marked as yours, `brand.md` and the rules in force, the three directions, how to check, what to report. real data is wired in before the first direction is built and the brief says where it loads from and which of it is real: sample numbers hide the layout problems that real ones show, a missing value, a price in cents, twelve items where the mock had six.
+3. **one brief in a file,** read by every builder and the reviewer: what it is for, the whiteboard marks verbatim when a board ran ([whiteboard.md](whiteboard.md#5-the-brief-from-the-marks)), right first and the wrong pile as the avoid list, every reaction verbatim, the rejected screenshots by path and named as rejected, your read of why marked as yours, `brand.md` and the rules in force, the three directions, how to check, what to report. real data is wired in before the first direction is built and the brief says where it loads from and which of it is real: sample numbers hide the layout problems that real ones show, a missing value, a price in cents, twelve items where the mock had six.
 4. **three directions, each copied from its own read ref.** a direction is what the page is: a decision desk like one product, a gallery like another, a table like a third. each has its `## sources` row and evidence folder, read with `ref-read.mjs` before anyone builds. a direction with nothing real behind it is a fourth guess. a palette or a font is not a direction. each builder gets one, its own file, its own scratch folder and port, and sees nobody else's work.
-5. **each builder looks at its own work.** every round: the fast check (section 7) and screenshots at a wide desktop (1920x1080 or the user's own screen), a laptop (1440x900) and a phone (390x844), opened and judged. at least three look and fix rounds, then the full sweep once before the report. the brief says it plainly: stop when the screenshots are good, not when the code runs.
+5. **each builder looks at its own work.** every round: the fast check (section 7) and screenshots at a wide desktop (1920x1080 or the user's own screen), a laptop (1440x900) and a phone (390x844), opened and judged. at least three look and fix rounds, then the full sweep once before the report: chromium and webkit, overflow 0, targets under 44 px 0, text under 12 px 0. three builders and their browsers fill a laptop, so the sweep runs on a spare machine when there is one ([whiteboard.md](whiteboard.md#10-the-sweep-on-a-spare-machine)). the brief says it plainly: stop when the screenshots are good, not when the code runs.
 6. **a fresh reviewer picks.** it has seen none of the earlier rounds. it takes its own screenshots, uses each page, picks one, runs the reviewer brief's checks on the pick and lists every "no" still coming, in the user's voice.
 7. **one fix round on the pick,** by the pick's builder, or a fresh one with the brief and the list. then steps 9 and 10 of the loop: measure, look at the final screenshots yourself, cut, sweep.
 8. **the user sees one page.** the other two stay beside it as files. the message that shows it says a fresh review ran and what it picked.
@@ -62,6 +62,9 @@ you are building one direction of <page> for <who>. it has been rejected
 
 what it is for, their words:
   "<the message where they say what they do with it>"
+what they marked on the board, verbatim (when a board ran):
+  right: <ref file> "<note>"   close: <ref file> "<note>"
+  wrong, the avoid list: <ref file> "<note>"
 what they said about the look, verbatim:
   - "<reaction>"
 rejected: <screenshot paths>. open them. why it failed, my read, not their
