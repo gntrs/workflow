@@ -6,6 +6,8 @@
   <img alt="let him /cook, workflow: the hold up, let him cook marmot meme. agent skills that plan, build, review early and stop for your yes." src="assets/hero-light.svg">
 </picture>
 
+skills for claude code and other coding agents. `/cook` sizes a task, builds it, reviews itself and stops before anything leaves your machine. `/bbq` builds a demo inside a time box.
+
 <img src="assets/memes/replaced.jpg" width="360" alt="meme: ai will replace you. me, who already replaced myself with claude">
 
 ## install
