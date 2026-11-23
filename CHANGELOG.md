@@ -2,6 +2,11 @@
 
 newest first. the installer prints the version it had and the one it wrote.
 
+## 1.1.1
+
+- the readme says what this is in one line under the hero, so the page has words before "install".
+- `setup/known-hashes.txt` now holds the 1.1.0 files too.
+
 ## 1.1.0
 
 updates work now. before this, running the installer again skipped every skill that differed from the new one, whether you had edited it or not.
