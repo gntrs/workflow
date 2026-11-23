@@ -1,6 +1,6 @@
 ---
 name: review
-description: Fresh eyes on a plan, one lane's diff, or the whole diff. Spawns one subagent with no prior context that reads the work cold, predicts the user's "no", and returns ship, fix these, or redo, judged on whether this is the best outcome, the user's taste and RULES.md. Shows the verdict and changes nothing. Invoke on /review, "is this the best outcome", "fresh agent review it", "get a second pair of eyes", "review the plan", and at cook's three review points (the plan, each lane as it lands, the whole before /ship).
+description: Fresh eyes on a plan, a diff or a running demo. One subagent with no prior context predicts the user's "no" and returns ship, fix these, or redo. The reviewer changes nothing; inside cook or bbq the caller fixes the findings unasked. Invoke on /review, "is this the best outcome", "second pair of eyes", "review the plan".
 ---
 
 # review
@@ -9,9 +9,9 @@ the reviewer did not watch the work happen. that is the point. it gets the artif
 
 ## what goes to the reviewer
 
-one subagent, read only, with the model and effort cook's table gives the review role. its prompt holds only:
+one subagent, read only, with `model` and effort set on the call from cook's table: the lane review row for a plan or one lane, the final review row for the whole or a demo. its prompt holds only:
 
-1. **the target.** a plan: its path. one lane: its diff and its brief. the whole: the branch name and `git diff main...HEAD` plus uncommitted changes, or the pr number.
+1. **the target.** a plan: its path. one lane: its diff and its brief. the whole: the branch name and `git diff main...HEAD` plus uncommitted changes, or the pr number. a demo (from `/bbq`): the running url and the demo path, walked, not read.
 2. **the user's words, verbatim**, copied from the `## cooking` entry in the tbd or the plan's first section, plus any reaction they gave to an earlier round. not a summary of them.
 3. **where to read the bar:**
    - `~/.claude/RULES.md`
@@ -47,4 +47,7 @@ not checked: what it could not run and why
 
 ## then
 
-show the verdict as returned, with one line on top only if you disagree with it, and why. change nothing. no edits, no commits, no fixes started. inside a cook run, findings go back to the builder that owns those files; otherwise the user says which items to take, then it goes back through `/cook`.
+the reviewer changes nothing: no edits, no commits.
+
+- **inside a cook or bbq run** this skill runs without the user asking, and the caller does not stop on the verdict. each finding goes to the builder that owns those files and is fixed or argued, without asking. the verdict and what was done with it go into the `reviewed:` line of the recap.
+- **called by the user on its own:** show the verdict as returned, with one line on top only if you disagree with it, and why. start no fix. the user says which items to take, then it goes back through `/cook`.

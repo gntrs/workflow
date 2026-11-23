@@ -26,6 +26,11 @@ it lays the page out in an iframe of each exact size and measures:
 - controls under 44 px at phone widths, under 24 px above
 - text under 12 px at phone widths
 - controls nobody can reach, and steps that never arrived
+- `off-center`: a main column with a max width that is not centered on a wide screen
+
+it does not collect console errors: read them in devtools or your runner.
+
+a box meant to scroll sideways keeps `data-probe-scroll`: never reflow an intended scroller into a stack just to quiet the probe, and never hide overflow with `overflow-x: hidden`, the probe reports what it cuts off. hit areas are measured on the control's own box: a smaller look sits inside a 44 px box with padding, never a `::before` the probe cannot see.
 
 text and controls at opacity 0 (a reveal on scroll that has not run) are counted on the row, not measured. a page whose sections fade in gets its reveals turned off for the sweep, or is walked with steps.
 
@@ -48,7 +53,7 @@ text and controls at opacity 0 (a reveal on scroll that has not run) are counted
 - **which files:** the changed ones, or name them when nothing is uncommitted and there is no base branch. a changed file is checked whole, so touching one line of an old file shows the hits already in it. a folder run on an older app is an audit to read, not a gate.
 
 - run it on the changed files only. vendor code and third party css are not the brand's to check.
-- a hit is a question, not a fix: a gap goes under `## proposed`, drift is asked once and logged under `## changes` ([SKILL.md](../SKILL.md) section 1), a value the brand accepts goes under `## allow`, one line of someone else's brand gets `brand-check-ignore` ([SKILL.md](../SKILL.md) section 1).
+- a hit is a question, not a fix: a gap goes under `## proposed`, drift is asked once and logged under `## changes`, a value the brand accepts goes under `## allow`, one line of someone else's brand gets `brand-check-ignore` ([brand.md](brand.md#gaps-drift-and-allow)).
 - `node tools/brand-check.mjs --self-test`, in a clone of the workflow repo, proves it still catches a planted off brand value and passes a clean file.
 
 ## the ref check
@@ -85,21 +90,20 @@ a sweep that skips states reports clean. it only covers what it walked.
 
 - list every state before sweeping: each screen, open menus, sheets and dialogs, empty, loading, error, long content, logged out.
 - the report's row count must equal sizes times states. check it.
+- a state the sweep must see (an open panel) gets a url, so it can be swept as a path.
 - the fresh reviewer checks this list against the app, not against the report.
 
 ## phone thresholds that have held
 
 - header at most 56 px
 - hero at most 1.1 screens, the product's top edge above the fold on a common phone
-- no section over 1.2 screens on a common phone, 1.4 on the smallest
-- no text under 12 px, no control box under 44 px under 640 wide, under 24 px above
+- no section over 1.4 screens on the smallest phone (the 1.2 screen, 12 px and 44 px floors are in [SKILL.md](../SKILL.md) section 7)
 - anything that moves overlaps text by 0 px
 - a state change (a key press, a toggle) moves nothing below it
-- no horizontal overflow at any size
 
 ## phone specifics that bite
 
-- own layout under 640, `svh` units, `viewport-fit=cover` and safe area insets, an html background for the rubber band, hover only on hover devices, any per os attribute set before paint.
+- `svh` units, `viewport-fit=cover` and safe area insets, an html background for the rubber band, hover only on hover devices, any per os attribute set before paint.
 - anchors under a fixed header: scroll padding and a scroll margin adding up put them far too low. use one, not both.
 - deep links need a jump after `document.fonts.ready`, fonts can shrink the page after load.
 - not verifiable headless, so it goes in the hand test: `svh` with real toolbars, the status bar inset, blur cost on a mid range android, rubber band color, fast flings.

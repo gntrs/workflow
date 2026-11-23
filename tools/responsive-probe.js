@@ -40,6 +40,11 @@
  *                (a table squeezed into a wrapper). one meant to scroll, a
  *                chip row, a carousel, a board on a phone, carries
  *                data-probe-scroll.                                   fault
+ *   off-center   at 1280 and wider: a column with a max width and no auto
+ *                margins (or a stack of them, one per section), glued to
+ *                the left with the right of its parent empty. no narrow
+ *                size can show it. one meant to sit left carries
+ *                data-probe-left.                                     fault
  *   THREW        a step or the boot never arrived at that size.       fault
  *   opacity 0    text and controls hidden only by opacity 0 (a reveal on scroll
  *                that has not run, a closed tooltip) are not measured, and are
@@ -68,6 +73,7 @@ const SIZES = [
   [1280, 800, 'small laptop'],
   [1440, 900, 'laptop'],
   [1920, 1080, 'desktop'],
+  [2560, 1440, 'wide monitor'],
 ];
 
 /*
@@ -295,6 +301,46 @@ function offCanvas(el, win) {
   return false;
 }
 
+/* a wide screen shows what no narrow one can: a column with a max width and no auto margins sits
+   glued to the left of its parent, the right side empty. walk down the boxes that fill their parent
+   and look at each child: narrower than the parent, starting at its left, nothing beside it. one
+   tall column is enough, and so is a stack of short ones (a landing page whose every section holds
+   the same left glued wrapper) once together they are half a screen tall. a fixed box on the right,
+   a table of contents or a chat panel, counts as something beside it at any scroll position. */
+function offCenter(doc, w, h) {
+  if (w < 1280) return [];
+  const win = doc.defaultView;
+  const pinned = [...doc.body.querySelectorAll('*')]
+    .filter((el) => win.getComputedStyle(el).position === 'fixed' && visible(el))
+    .map((el) => el.getBoundingClientRect())
+    .filter((r) => r.width > 0 && r.height > 0);
+  const found = [];
+  const walk = (parent, depth) => {
+    if (depth > 6 || parent.closest('[data-probe-left]')) return;
+    for (const n of parent.childNodes) if (n.nodeType === 3 && n.textContent.trim()) return;
+    const p = parent.getBoundingClientRect();
+    const kids = [...parent.children]
+      .filter((el) => !/^(SCRIPT|STYLE|LINK|BR)$/.test(el.tagName) && visible(el) && !isFixed(el))
+      .map((el) => ({ el, r: el.getBoundingClientRect() }))
+      .filter((k) => k.r.width > 0 && k.r.height > 0);
+    for (const { el, r } of kids) {
+      if (el.hasAttribute('data-probe-left')) continue;
+      const gapL = r.left - p.left, gapR = p.right - r.right;
+      const glued = r.height >= 80 && r.width >= p.width * 0.3 && r.width <= p.width * 0.85 && gapR > p.width * 0.25 && gapL < gapR / 3;
+      const beside = kids.some((k) => k.el !== el && k.r.right > r.right + 1 && k.r.bottom > r.top + 1 && k.r.top < r.bottom - 1)
+        || pinned.some((f) => f.right > r.right + 1 && f.left < p.right);
+      if (glued && !beside) found.push({ el, r, p, gapR });
+      else if (r.width >= p.width * 0.85 && r.width >= w * 0.5) walk(el, depth + 1);
+    }
+  };
+  walk(doc.body, 0);
+  const tall = found.reduce((sum, f) => sum + f.r.height, 0);
+  if (!found.length || tall < h / 2) return [];
+  const f = found.reduce((a, b) => (b.r.height > a.r.height ? b : a));
+  const more = found.length > 1 ? `, and ${found.length - 1} more like it` : '';
+  return [`off-center ${selector(f.el)}, ${Math.round(f.r.width)}px wide at the left of a ${Math.round(f.p.width)}px box with ${Math.round(f.gapR)}px empty on its right${more} (a max width with no auto margins. meant to sit left: data-probe-left)`];
+}
+
 function measure(win, w, h, screen, issues, counts) {
   const doc = win.document;
   const root = doc.scrollingElement || doc.documentElement;
@@ -302,6 +348,7 @@ function measure(win, w, h, screen, issues, counts) {
     issues.push(`${screen}: overflow, page is ${root.scrollWidth}px wide in a ${w}px screen`);
     for (const c of widest(doc, w)) issues.push(`${screen}:   overflow by ${c}`);
   }
+  for (const c of offCenter(doc, w, h)) issues.push(`${screen}: ${c}`);
   /* overflow hidden on html (or on body while html is visible) locks the page: nothing past the
      bottom can be scrolled to, so it does not count as below the fold. */
   const hs = win.getComputedStyle(doc.documentElement), bs = win.getComputedStyle(doc.body);
@@ -534,7 +581,7 @@ async function probeHere({ steps = [] } = {}) {
   return rows;
 }
 
-const FAULT = /overflow|clipped|cut off|unreachable|scroller hides|: small |: tiny |THREW/;
+const FAULT = /overflow|clipped|cut off|unreachable|scroller hides|off-center|: small |: tiny |THREW/;
 
 /* one line per size, faults expanded, everything else counted and left alone. */
 function report(rows) {

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>a column glued to the left</title>
+<style>
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+  header { padding: 16px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; }
+  /* planted: a max width and no auto margins. fine on a laptop, glued to the left on a wide monitor */
+  main { max-width: 1200px; padding: 16px; min-height: 1200px; }
+  a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
+</style></head>
+<body>
+  <header><a href="#home">home</a><a href="#account">account</a></header>
+  <main>
+    <h1>a page that forgot margin auto</h1>
+    <p>the header runs the full width, so the page as a whole looks covered. the column under it is not.</p>
+  </main>
+</body></html>

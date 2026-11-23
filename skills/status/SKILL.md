@@ -1,6 +1,6 @@
 ---
 name: status
-description: Answers "all done? pushed? merged? deployed?" in five lines or fewer. Branch, ahead and behind, uncommitted files, the pr and its checks, the last deploy, open tbd items and whether a cooking entry is still open. Read only. Invoke when the user says "all done?", "pushed?", "merged?", "deployed?", "where are we", "status", or /status.
+description: Read only answer to "all done?" in five lines, branch, ahead and behind, uncommitted files, pr and checks, last deploy, open tbd items. Invoke on "all done?", "pushed?", "merged?", "deployed?", "where are we", /status.
 ---
 
 # status

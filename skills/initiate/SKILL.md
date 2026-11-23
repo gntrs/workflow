@@ -1,6 +1,6 @@
 ---
 name: initiate
-description: Bootstrap a repo with everything an agent needs, all gitignored. Ignores its notes files in .git/info/exclude (never all of .claude/) and verifies it before writing anything, reads the stack instead of guessing, writes .claude/CLAUDE.md with the fast and full verify commands, sets up the log, tbd and plans (in the brain if installed, else .claude/), checks the user's own git identity, proposes a test setup. Invoke in a fresh clone or when the user says initiate, set up this repo, or new repo. Never commits.
+description: Sets up a repo for agents, all gitignored, notes ignored and verified first, .claude/CLAUDE.md with verify commands, log and tbd, git identity, a test proposal. Never commits. Invoke in a fresh clone, or on "initiate", "set up this repo", "new repo".
 ---
 
 # initiate

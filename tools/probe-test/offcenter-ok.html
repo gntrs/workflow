@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>left on purpose, and two columns</title>
+<style>
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+  .docs { max-width: 1100px; padding: 16px; min-height: 900px; }
+  .split { display: flex; min-height: 900px; }
+  .split > * { flex: 1; padding: 16px; min-width: 0; }
+  .app { display: flex; min-height: 900px; }
+  .app nav { width: 240px; padding: 16px; flex: none; }
+  .app section { flex: 1; padding: 16px; min-width: 0; }
+  @media (max-width: 700px) { .app { display: block; } .app nav { width: auto; } }
+  .centered { max-width: 1100px; margin: 0 auto; padding: 16px; min-height: 900px; }
+</style></head>
+<body>
+  <!-- not faults: a column marked as left on purpose (a docs page), two columns side by side,
+       a sidebar with a pane that fills the rest, a centered column -->
+  <div class="docs" data-probe-left><h1>docs sit left on purpose</h1><p>marked, with the reason next to it.</p></div>
+  <div class="split"><div><h2>left half</h2><p>text</p></div><div><h2>right half</h2><p>text</p></div></div>
+  <div class="app"><nav><p>sidebar</p></nav><section><h2>the pane fills the rest</h2><p>text</p></section></div>
+  <div class="centered"><h2>centered</h2><p>text</p></div>
+</body></html>

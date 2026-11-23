@@ -12,7 +12,7 @@ part of `playbook`. pstack's `bug-fix` playbook and `principle-fix-root-causes` 
 - **`npm run build` in a repo with `next dev` running freezes that dev server, silently.** both write `.next`, so the dev server stops recompiling server components and serves the last thing it had, while css hot reload keeps working. tell: `find .next -newermt "-15 minutes"` returns nothing after an edit, and `.next` holds a production `BUILD_ID`. fix: restart the dev server. `ps -o ppid= -p <pid>` of 1 means nobody is watching that terminal.
 - **a changed env var does nothing until a redeploy.** the running deployment keeps the values it was built with, so editing a variable then testing the old preview tests the old value. check the newest deployment's time against the edit before believing any env test. the flip side: a wrong value has not landed yet if nothing deployed since. narrowing a variable's scope in a host dashboard moves it, leaving the other environments with none: add a second row, then narrow.
 - **a service worker can serve an old build** and cancel server checks (auth, redirects) on paths it already serves. date a screenshot against copy changed in the last push before fixing what it shows, and expose the running commit (a `/version.json`) so anyone can check.
-- **a fresh clone has no `node_modules`**, so every npm script dies as "command not found". install from the lockfile first.
+- **a fresh clone has no `node_modules`**, so every npm script dies as "command not found". install from the lockfile first. the installer's optional `--with-hooks` adds a PreToolUse hook that installs missing `node_modules` before a command that needs them.
 - **a file in a cloud synced folder can be evicted**, and a read returns `EDEADLK`. it reads as a fault in whatever library imported lazily. time the import: a minute at 0% cpu is a blocked read.
 - **a packaged app is not its binary run from a terminal.** the terminal lends its privacy grants. launch it the way a person does.
 - **absolute paths in repo scripts break on the next machine.** keep them relative or detected.
@@ -32,3 +32,7 @@ part of `playbook`. pstack's `bug-fix` playbook and `principle-fix-root-causes` 
 - **say which numbers were measured and which were derived, every time.** arithmetic against the tokens is evidence. presenting it as a rendered measurement is not.
 - **assets can be measured for real** with an image library already in the repo (`sharp` or the like): lit bounding box, exact-black coverage, contrast ratios.
 - **the served bundle is the truth.** `curl` the page, pull the css chunk out of the html and grep the compiled rule. that catches a rule that never fires, a value the minifier rewrote, and a change that never reached the build.
+
+## a command for the user to run
+
+sql or a shell command the user runs themselves: one paste. write it to the repo's gitignored `.claude/sql/` (or `.claude/run/` for shell) as `<date>-<topic>.sql`, never the brain, because it can carry real rows. first line a comment: reads or writes, and what. safe to run twice. it ends with a query that shows the result. open it (`open` on mac, `xdg-open` on linux, `start` on windows).

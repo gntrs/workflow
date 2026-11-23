@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# runs the repo's gate before every commit. install it once per clone:
+#   ln -sf ../../scripts/pre-commit .git/hooks/pre-commit
+# with a private list in .claude/denylist.txt it also stops a commit that carries one of your private strings.
+exec bash "$(git rev-parse --show-toplevel)/scripts/check.sh"

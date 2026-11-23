@@ -1,13 +1,13 @@
 ---
 name: ship
-description: Pre-flight before anything leaves the device, then the commit and push once the user says yes. Writes the text that would go public in the user's voice, lists every file and commit behind it, pastes real test output, gives numbered hand tests, names what was not verified, then stops. Only after the user's yes to that specific action does it commit as the user's own git identity and push the feature branch. Invoke before any push, PR, comment, deploy or release, or when the user says ship it or push it.
+description: Pre-flight before anything leaves the device, the public text, every file, real test output, hand tests, the chain a yes runs, then stop. Runs that chain only on the user's yes. Invoke before any push, pr, pr comment, merge, release, publish or deploy, or on "ship it", "push it".
 ---
 
 # ship
 
-nothing leaves this device without the user's yes, given now, on the device. this command prepares that decision, stops, and only after a yes to that specific action runs it. it never opens a pr unasked, never merges, never deploys on its own.
+nothing leaves this device without the user's yes, given now, on the device. this command prepares that decision, prints the chain a yes would run, stops, and only after a yes runs exactly that chain. it never opens a pr, merges or deploys unless that step is in the chain the user said yes to.
 
-produce one block the user can read top to bottom. the first part is what goes public. everything under it is the evidence.
+produce one block the user can read top to bottom. its first line says whether a fresh review ran and its verdict: `reviewed: yes, cold, fix these, all taken` or `reviewed: no`. then what goes public. everything under it is the evidence, and the chain closes it.
 
 ## 1. the text
 
@@ -57,14 +57,29 @@ work goes out on its own `feat/`, `fix/` or `chore/` branch and reaches main thr
 - working notes, research, trackers, `.env` files and the notes files in `.claude/` (per `/initiate`) are not going out. `AGENTS.md` and `CLAUDE.md` only if the repo already commits them as the team's convention.
 - confirm the notes files are ignored here (`git check-ignore .claude/tbd.md`). if not, flag it before anything else.
 - `git config user.name` and `git config user.email` are the user's own identity for this remote. if they look wrong, say so now, not after the commit.
+- a `never send` list of strings in `~/.claude/RULES.local.md` or the repo's `.claude/CLAUDE.md` is grepped against everything going out: the text, the diff, new files, commit messages. a hit stops the block until the user says what to do.
 
-## 8. then stop
+## 8. the chain, then stop
 
-print the block and wait. do not commit, push, open the pr, merge or deploy, even if the user approved a similar thing earlier in the session. a yes for one thing is not a yes for the next one.
+close the block with what a yes runs, numbered, one action a line:
 
-## 9. on the user's yes, commit then push
+```
+on your yes:
+1. commit the 3 files above with this message
+2. push feat/export-csv
+3. open the pr, base main
+4. merge (squash) when every check is green
+```
 
-only after a yes to this specific action, in this session, on this device. a relayed yes is not one. then exactly this, and nothing more:
+- commit and push are the default chain. a pr only if the user asked for one. a merge only if they named it, with the method the repo uses (its `.claude/CLAUDE.md`, else the host's settings).
+- one yes covers exactly this chain, once. a later yes covers nothing until a new block prints a new chain. no chain printed: one yes is one action.
+- a deploy goes in a chain only when the user named it and the repo's `.claude/CLAUDE.md` says how. the one other case: a `/bbq` run may print a preview deploy, never production, as the last step, on a host cli that is already logged in.
+
+print the block and wait. run nothing, even if the user approved a similar thing earlier in the session. a yes for one thing is not a yes for the next one.
+
+## 9. on the user's yes, run the chain
+
+only after a yes to this block, in this session, on this device. a relayed yes is not one. the printed steps in order, nothing more, and stop at the first failure or the first thing not in the chain (a hook asking for input, a rebase, a review requested): report it and wait for a new yes.
 
 1. confirm the branch: `git branch --show-current`. on main or the prod branch: stop and ask, never commit there unless the repo's `.claude/CLAUDE.md` records that standing exception.
 2. stage only the files listed in section 2: `git add <each path>`. never `git add -A` or `git add .`. check `git status --short` shows no notes file or anything from the safety list staged.
@@ -72,7 +87,8 @@ only after a yes to this specific action, in this session, on this device. a rel
 4. no remote (`git remote` prints nothing): say so and stop after the commit.
    push the feature branch: `git push -u origin <branch>` the first time, `git push` after. never `--force` unless the user said those words for this push, and then `--force-with-lease`. a push rejected for the email address: stop, and offer the host's noreply address per `/initiate` step 5.
 5. paste the push output, `git log -1 --format='%h %an <%ae> %s'` and `git status -sb`, so the user sees what went and as whom.
-6. a pr only if the user asked for one: `gh pr create --title <approved> --body-file <approved>`, base main. paste the url. never merge, never arm auto merge. merging is the user's.
-7. the log entry: date, branch, the short sha, pushed, the pr url if any, what is open. the tbd updated. the brain if installed (`~/vault/projects/<repo>/<repo>-log.md`), else `.claude/log.md`.
+6. a pr only if the chain has it: `gh pr create --title <approved> --body-file <approved>`, base main. paste the url.
+7. a merge only if the chain has it: `gh pr checks <n> --watch`, then, every check green, `gh pr merge <n>` with the printed method. any red, a check that never finishes, a conflict or a required review: stop and report. never `--auto`, never `--admin`, never force. paste `gh pr view <n> --json state,mergedAt`.
+8. the log entry: date, branch, the short sha, pushed, the pr url if any, merged or not, what is open. the tbd updated. the brain if installed (`~/vault/projects/<repo>/<repo>-log.md`), else `.claude/log.md`.
 
-after a deploy the user ran or approved, verify the served artifact (fetch the live page or bundle and grep for a string from this change), not the green checkmark. hosts rehash chunks, so comparing hashes proves nothing. merge and deploy runbooks live in `playbook`.
+after a deploy the user ran or approved, verify the served artifact (fetch the live page or bundle and grep for a string from this change), not the green checkmark. hosts rehash chunks, so comparing hashes proves nothing. a production deploy can get a public domain even when previews sit behind a login: after any prod deploy, list the deployment's domains (the host's cli or dashboard) and open each one logged out to see what is public. merge and deploy runbooks live in `playbook`.

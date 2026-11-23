@@ -8,13 +8,17 @@
 //   node tools/probe-test.mjs
 //     the self-test. serves tools/probe-test/ on a local port, opens it in headless chromium,
 // loads the probe the same way you would paste it into a console, and sweeps:
-//   planted.html  a 30 px button (caught on phones), a 20 px button, a 2400 px strip, a table in a sideways scroller and a link cut off by an
+//   planted.html  a 30 px button (caught on phones), a 20 px button, a 3200 px strip, a table in a sideways scroller and a link cut off by an
 //                 overflow-x hidden wrapper, 10 px text next to an icon, a fixed height card hiding its link.
 //                 all caught at every size (the tiny text at phone widths).
 //   cutoff.html   a card cut off under overflow-x hidden, and a strip that lands 250 ms late. caught;
 //                 a closed drawer fully off screen is not.
 //   locked.html   html, body overflow hidden: a button below the screen is unreachable at every size.
 //   scroller.html only a table hidden in a sideways scroller. every size must fail.
+//   offcenter.html a tall column with a max width and no auto margins under a full width header: caught at 1920 and 2560, where it shows.
+//   offcenter-sections.html the same left glued wrapper in every short section of a landing page: caught at 1920 and 2560.
+//   offcenter-fixed.html an article that sits left beside a fixed panel. clean at every size.
+//   offcenter-ok.html a column marked left on purpose, two columns, a sidebar layout, a centered column. clean at every size.
 //   modal.html    a sheet open over a scroll locked page. clean at every size.
 //   clean.html    nothing wrong, including a fixed side panel that scrolls and a closed fold. every size must report clean.
 // exits 0 only when all of them hold. exits 2 when it cannot run (no browser, a url that does not open).
@@ -217,6 +221,20 @@ try {
   const missedLate = cutoff.rows.filter((r) => !r.issues.some((i) => /: cut off "late strip"/.test(i)));
   const drawer = cutoff.rows.filter((r) => r.issues.some((i) => /"menu|menu link"/.test(i)));
 
+  const off = await sweep('/offcenter.html');
+  console.log('== offcenter.html\n' + off.text + '\n');
+  const wide = (r) => Number(r.size.split('x')[0]) >= 1920;
+  const offWrong = off.rows.filter((r) => r.issues.some((i) => /: off-center main/.test(i)) !== wide(r));
+  const offSec = await sweep('/offcenter-sections.html');
+  console.log('== offcenter-sections.html\n' + offSec.text + '\n');
+  const offSecWrong = offSec.rows.filter((r) => r.issues.some((i) => /: off-center div\.wrap.*3 more like it/.test(i)) !== wide(r));
+  const offFixed = await sweep('/offcenter-fixed.html');
+  console.log('== offcenter-fixed.html\n' + offFixed.text + '\n');
+  const offFixedDirty = offFixed.rows.filter((r) => r.issues.some((i) => FAULT.test(i)));
+  const offOk = await sweep('/offcenter-ok.html');
+  console.log('== offcenter-ok.html\n' + offOk.text + '\n');
+  const offOkDirty = offOk.rows.filter((r) => r.issues.some((i) => FAULT.test(i)));
+
   const modal = await sweep('/modal.html');
   console.log('== modal.html\n' + modal.text + '\n');
   const modalDirty = modal.rows.filter((r) => r.issues.some((i) => FAULT.test(i)));
@@ -238,6 +256,10 @@ try {
   check(missedLate.length === 0, `content that lands 250 ms after load measured at ${cutoff.rows.length - missedLate.length}/${cutoff.rows.length} sizes`);
   check(drawer.length === 0, `a closed drawer fully off screen left alone at ${cutoff.rows.length - drawer.length}/${cutoff.rows.length} sizes`);
   check(missedLocked.length === 0, `a button below a page locked by overflow hidden caught at ${locked.rows.length - missedLocked.length}/${locked.rows.length} sizes`);
+  check(offWrong.length === 0, `a column glued to the left caught at 1920 and 2560 and left alone below, right at ${off.rows.length - offWrong.length}/${off.rows.length} sizes`);
+  check(offSecWrong.length === 0, `the same left glued wrapper in four short sections caught at 1920 and 2560, right at ${offSec.rows.length - offSecWrong.length}/${offSec.rows.length} sizes`);
+  check(offFixedDirty.length === 0, `an article beside a fixed panel left alone at ${offFixed.rows.length - offFixedDirty.length}/${offFixed.rows.length} sizes`);
+  check(offOkDirty.length === 0, `left on purpose, two columns, a sidebar layout and a centered column left alone at ${offOk.rows.length - offOkDirty.length}/${offOk.rows.length} sizes`);
   check(modalDirty.length === 0, `the page behind an open sheet with the scroll locked left alone at ${modal.rows.length - modalDirty.length}/${modal.rows.length} sizes`);
   check(dirty.length === 0, `clean page clean at ${clean.rows.length - dirty.length}/${clean.rows.length} sizes`);
 } finally {

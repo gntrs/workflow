@@ -112,6 +112,18 @@ not built: <elements that do not exist yet, and the stand-in to use until they d
 - <date> <what changed> <who said so>
 ```
 
+## finding the brand
+
+look in this order: an existing `brand.md` (root, `.claude/` or the brain), tokens in code (`tailwind.config.*`, `:root` custom properties, a `theme` file, a tokens json), a brand doc (`BRAND.md`, `docs/brand*`, `design-system.md`), the live site, their other products, the logo files. no `brand.md` yet means one of three states:
+
+1. **brand in code.** many screens that disagree (several button recipes, a dozen radii): audit first, [audit.md](audit.md). otherwise extract it into `brand.md` with the token names, each value with where it came from. status `draft` until the owner reads it, then `confirmed <date>`.
+2. **brand only in a doc, figma or a live site.** read computed styles off the live site, values off the doc. figma you cannot open: ask for an export or screenshots and mark every value inferred. write `brand.md`, then put the values into tokens in code before the first screen.
+3. **none.** the five questions and three live looks on one real screen, below.
+
+**where it lives:** `brand.md` sits at the project root, or in the private notes (`.claude/brand.md`, ignored like the other notes files, or the brain at `~/vault/projects/<repo>/brand.md`) when the repo is shared and the user keeps notes out of it.
+
+**the kit's lint:** once a kit exists, the project's own linter fails a raw `<button>`, `<input>` or `<select>` outside the kit folder ([audit.md](audit.md#the-lint)). a component library joins the kit the same way: liquid glass only on request ([glass.md](glass.md)).
+
 ## filling it from what exists
 
 | where | what to read |
@@ -157,12 +169,18 @@ then:
 
 short beats complete. twenty literal lines the owner picked do more than a long book nobody read.
 
-## gaps and drift
+## gaps, drift and allow
 
-the rules are in [SKILL.md](../SKILL.md) section 1. how they land in the file:
+the rules:
+
+- **a gap:** a screen needs a value the brand does not have (a hover, a warning, a second radius). derive it from the nearest token, write it under `## proposed` with the reason, and flag it in your report. never invent one silently.
+- **drift:** `node ~/.claude/tools/brand-check.mjs <brand.md> [changed files]` lists values in the changed files that are not in `brand.md`, its token files or `## allow` ([verify.md](verify.md#the-brand-check) has what it reads and misses). values under `## proposed` print as proposed, not as hits. a token file is the brand too: a new or changed value there is a brand change and waits for the owner like any other. on a hit, ask once whether the code or `brand.md` is right, fix whichever loses, and log it under `## changes`.
+- **allowed on purpose:** a value the brand accepts anywhere (a payment button's color on every checkout) goes under `## allow` with why. one line that shows someone else's brand (an embed, a map tile) gets a `brand-check-ignore` comment on it or the line above. neither is a way to get the check green.
+
+how they land in the file:
 
 - **a gap** is a row under `## proposed`: the role, a token name, the value derived from the nearest token (a hover one step darker than the accent, a warning from the error hue), why the screen needed it, and when the owner was asked. it moves into its table when they say yes.
 - **drift** is a line under `## changes`: the date, the value, which side won (code or brand.md), who said so.
 - **decided, not built:** the owner picked a new value but the code still ships the old one. the new value goes in the table, the old one under `## allow` with `until <what replaces it>`, and the line leaves when the code catches up.
 - **how sure a rule is:** mark a line in `## do and don't` `(ruled)` when the owner decided it, `(shipped)` when it only describes what the code does, `(open)` when undecided: build on the default and ask before relying on it.
-- **an allowed literal** (a payment widget's own color, used wherever checkout shows) goes under `## allow` with its reason. one line of someone else's brand gets `brand-check-ignore` instead ([SKILL.md](../SKILL.md) section 1).
+- **an allowed literal** (a payment widget's own color, used wherever checkout shows) goes under `## allow` with its reason. one line of someone else's brand gets `brand-check-ignore` instead, per the rules above.

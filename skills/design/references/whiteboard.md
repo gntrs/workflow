@@ -15,7 +15,7 @@ this is not a mood board. a mood board of ten refs averages into nothing ([inspo
 7. **a fresh reviewer picks one** and prefires the user's "no".
 8. **one fix round** on the pick.
 9. **the user sees one.**
-10. **the size sweep,** on a spare machine.
+10. **the size sweep,** on a second machine if you have one.
 
 steps 6 to 9 are [three directions](loop.md#two-nos-three-directions). this file covers 1 to 5 and 10.
 
@@ -74,14 +74,14 @@ my read of the pattern, not their words:
 - your read of the pattern is labeled as yours, so a builder can tell their words from your guess.
 - the three directions each take one ref from the right or close pile as their structure. a direction with no marked ref behind it is a guess.
 
-## 10. the sweep, on a spare machine
+## 10. the sweep, and where it runs
 
-three builders, three dev servers and two browser engines fill a laptop's memory. run the sweep on a spare machine when there is one (a desktop, a home server, a cloud box), not the laptop the user is working on. serve the pick there, or point the probe at its url.
+three builders, three dev servers and two browser engines fill a laptop's memory. if you have a second machine (a desktop, a home server, a cloud box), run the sweep there, not on the laptop the user is working on: serve the pick there, or point the probe at its url. one laptop is fine too: below.
 
 - chromium and webkit, every size in the probe's list.
 - page overflow 0.
 - targets under 44 px on phones 0.
 - text under 12 px 0.
-- say which numbers were measured on which engine. no spare machine: run it locally, one engine at a time, and say so.
+- say which numbers were measured on which engine. on one machine: run it locally, one engine at a time, after the builders stop, and say so.
 
 the probe and the thresholds: [verify.md](verify.md).

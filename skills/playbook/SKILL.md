@@ -1,21 +1,21 @@
 ---
 name: playbook
-description: How to work with the user on any build. Which pstack skill runs which kind of subagent work (and what to do without pstack), the swarm shapes, and the ledger of mistakes already made. /cook loads it for every task. Invoke when working on any build, or when the user says "cook", "spin up agents", "swarm", "parallelize this", or wants something shipped fast.
+description: How to work on any build, which pstack skill runs which subagent job, swarm shapes, the mistake ledger. Cook loads it. Invoke on "spin up agents", "swarm", "parallelize this", or any build.
 ---
 
 # playbook
 
 how to work. RULES.md holds the always-on rules and wins over this file and over pstack. this file holds how. depth is in `references/`, one read away.
 
-## keep this file current
+## keep lessons where updates cannot erase them
 
-a living file. update it when something big is learned, not for every small thing.
+updates replace this file and every installed skill, so lessons never go into them. a lesson that applies everywhere is one line in `~/.claude/RULES.local.md`. one repo's goes into that repo's `.claude/CLAUDE.md`. one worth sharing with everyone: offer it as a change to the workflow repo itself.
 
-**update it when:** a root cause cost real time and would again (a dead deploy hook, a key owned by the wrong account, a platform gate like autoplay on phones). the user corrects how work is done, or reacts strongly to an approach. a swarm shape works notably well or fails notably badly.
+**write one when:** a root cause cost real time and would again (a dead deploy hook, a key owned by the wrong account, a platform gate like autoplay on phones). the user corrects how work is done, or reacts strongly to an approach. a swarm shape works notably well or fails notably badly.
 
-**do not update it for:** one-off bugs with no general lesson, routine work that followed the playbook, anything already written here, minutes-old chat detail.
+**do not write one for:** one-off bugs with no general lesson, routine work that followed the playbook, anything already written here, minutes-old chat detail.
 
-**how:** edit the section in place, keep it tight, delete what became false. depth goes to a reference file, the core stays near 150 lines. no changelog. zero em dashes. tell the user in one line what changed and why. committing it is a git action like any other: ask.
+**how:** one line, tight, and delete what became false. no changelog. zero em dashes. tell the user in one line what you wrote and where.
 
 ## before any work
 
@@ -64,7 +64,8 @@ pstack (`github.com/ericlitman/open-pstack`, MIT) is an optional engine; the mid
 | parallel coverage, a race, verify lanes | `swarm` | a rolling window of Agent calls under the cap |
 | contested design, hard work before `/ship` | `interrogate` | `/review` twice, two model families if available |
 | fresh eyes on a plan or a diff | `/review` | `/review` |
-| one feature or bug in a known area | pstack's `feature` or `bug-fix` playbook | main thread plus one reviewer |
+| one feature or bug in a known area | cook's fast loop (cook section 2), a pstack tool only by name | the same |
+| a hackathon, a prototype, a quick iteration | `/bbq` | `/bbq` |
 | long run to a checkable predicate | pstack's `autonomous-run` or `orchestrate` playbook | `/deep` drives it |
 | resume after a compact, a clear or a crash | pstack's `session-pickup` playbook | read the `## cooking` entry first |
 | "catch me up" | `recall` | read the log, newest first |
@@ -85,14 +86,19 @@ swarm shapes, who does what in a big run, and the review-earlier rules: `referen
 8. **the user's words verbatim** in the brief, not your summary of them.
 9. **the report goes to a file** the brief names (scratchpad or `.claude/`), with a three line summary back. a long report pasted into the coordinator fills its context.
 
+## speed, without losing the outcome
+
+what makes a run fast is rarely a faster model. it is less waiting. the rules are in cook section 2 and hold in every lane: everything independent starts in one message, a contract before a split, a brief that needs no follow up, reports under 200 words, review while it builds, high effort only on the seats that decide. the coordinator does not build the pieces once two or more builders run. the shared files, the seams and the wiring are its own. a second agent is slower on a one file change, on anything that needs the context already in the main thread, and when two would write the same file.
+
 ## models and caps
 
 one source of truth: the cap in `cook` (section 0) and its model table (section 1). do not copy them here. what this file adds:
 
-- **a second model family when available, never the only one.** a panel on one model dies with that model's credits.
+- **one strong model on every seat, `model` set on every call.** a second family only on the one or two major seats (the deep lane planner, the final review), beside the strong model, never the only lane: a panel on one model dies with that model's credits. the names live in `~/.claude/RULES.local.md` under `## models`.
 - **never silently downgrade a builder.** a cheaper builder saves less than the rework costs.
 - **the user's time is the constraint, both ways.** heavy machinery for work that deserves it, a trivial task stays trivial.
-- **the cap is for the machine, not the session.** other sessions open on the same repo: list them and ask before worktrees or builders. two sessions building the same branch names put two writers in one tree.
+- **the cap is for the machine, not the session.** other sessions open on the same repo count against it: list them, take your own worktree and say so, ask only when free disk is under cook's floor. two sessions building the same branch names put two writers in one tree.
+- a dev server binds to `127.0.0.1` (plus a private vpn address if the user works across machines), never `0.0.0.0`: a laptop on shared wifi serves the whole room.
 - a dev server's build cache (`.next` and the like) can grow to several GB. kill the server and clear it when done.
 
 ## mistakes already made, do not repeat

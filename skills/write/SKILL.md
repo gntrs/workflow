@@ -1,13 +1,13 @@
 ---
 name: write
-description: How to write anything a human will read. One plain register (lowercase, direct, short) that setup can retune to the user's own voice, the list of tells that make text read as machine written, and a method. Invoke before writing a brief, a spec, a README, a client message, a commit or PR body, a release note, a proposal, or any doc that leaves the chat. Also invoke on "rewrite this", "this sounds like AI", "make it plainer".
+description: How to write anything a person reads, one plain register, the tells of machine text, a method. Invoke before a brief, spec, readme, message, commit or pr body, release note, or on "rewrite this", "sounds like ai", "make it plainer".
 ---
 
 # write
 
 plainer than anything a model writes by default. one register for everything a person reads, then the tells list over it before it goes out.
 
-<!-- setup: if the user described their own voice, or pasted something they wrote, retune "the register" below to match it and keep the tells list as is. note what changed in one line under this comment. -->
+the user's own voice, if they described one, lives in `~/.claude/RULES.local.md` and wins over the register below. the tells list holds either way. a new voice rule goes there, never into this file: updates replace it.
 
 commit messages: `playbook` `references/deploy.md`.
 
@@ -40,6 +40,8 @@ plain, lowercase, direct. capitals only for code, file names, and names of produ
 - never oversell. let the numbers talk.
 
 write it so the user can paste it without editing. a decision they have not made is a marked blank, never invented.
+
+**text they will copy goes as plain lines or a code block, never a blockquote.** a message draft, a command, a reply: the `>` bars come along with the copy and land in what they send.
 
 **the user's own words stay theirs.** when cleaning up a page or a doc, cut chrome, labels and filler freely, but anything they wrote in the first person is kept word for word, typos and caps included. new copy you had to add is short and flagged as yours so they can swap it.
 

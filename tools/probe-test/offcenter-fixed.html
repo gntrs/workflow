@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>an article beside a fixed panel</title>
+<style>
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+  article { max-width: 1100px; padding: 16px; min-height: 2400px; box-sizing: border-box; }
+  /* not a fault: the right of the article is not empty, a fixed table of contents sits there on wide screens */
+  aside { display: none; }
+  @media (min-width: 1500px) { aside { display: block; position: fixed; top: 0; right: 0; bottom: 0; width: 360px; padding: 16px; border-left: 1px solid #ddd; box-sizing: border-box; } }
+</style></head>
+<body>
+  <article><h1>a long article</h1><p>it sits left because a fixed panel fills the right.</p></article>
+  <aside><p>on this page</p></aside>
+</body></html>

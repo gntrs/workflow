@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>every section glued to the left</title>
+<style>
+  body { margin: 0; font: 16px/1.5 system-ui, sans-serif; }
+  section { padding: 40px 16px; border-bottom: 1px solid #ddd; }
+  /* planted: the same wrapper in every section, a max width and no auto margins. no section is tall, together they are the page */
+  .wrap { max-width: 1200px; min-height: 300px; }
+</style></head>
+<body>
+  <section><div class="wrap"><h1>a landing page</h1><p>the hero.</p></div></section>
+  <section><div class="wrap"><h2>features</h2><p>text</p></div></section>
+  <section><div class="wrap"><h2>pricing</h2><p>text</p></div></section>
+  <section><div class="wrap"><h2>questions</h2><p>text</p></div></section>
+</body></html>
