@@ -1,6 +1,6 @@
 ---
 name: dream
-description: Optional, only if the brain is installed. Maintenance for the vault (`$VAULT`, default `~/vault`). Fixes broken links and missing backlinks, finds orphans and duplicate names, lints frontmatter, regenerates now.md from every tbd, checks memory claims against the code, flags secret shaped strings by path only, files inbox/. Writes a report to sessions/. Invoke on /dream, "clean the vault", "tidy the brain", "fix the links", or at the end of a long day of sessions.
+description: Optional vault maintenance, fixes links and backlinks, orphans, frontmatter, rebuilds now.md, checks memory claims, flags secret shapes by path. Invoke on /dream, "clean the vault", "tidy the brain", "fix the links".
 ---
 
 # dream

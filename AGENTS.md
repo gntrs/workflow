@@ -19,7 +19,7 @@ git clone --depth 1 https://github.com/gntrs/workflow.git ~/.claude/workflow
 markdown skills, one rules file, two installers and six scripts (the size probe, its runner, the brand check, the ref reader, the ref check, the recorder). no build.
 
 - skills live in `skills/<name>/SKILL.md`, depth in `skills/<name>/references/`. frontmatter `name` matches the folder.
-- `rules/RULES.md` is always on. a skill never contradicts it.
+- `rules/RULES.md` is always on. a skill never contradicts it. nothing tells the reader to edit an installed file: what is personal goes in `~/.claude/RULES.local.md` (template in `setup/RULES.local.md`).
 - generic only. no names, emails, hosts, private projects or personal paths.
 - lowercase, direct prose. zero em dashes.
 - `bash scripts/check.sh` before you hand back. it must print `ok`. put your own private strings in `.claude/denylist.txt` (gitignored, one regex per line) and it scans for them too.
@@ -27,7 +27,10 @@ markdown skills, one rules file, two installers and six scripts (the size probe,
 - after changing `tools/brand-check.mjs`, run `node tools/brand-check.mjs --self-test` and show every line passes.
 - after changing `tools/ref-read.mjs` or `tools/ref-check.mjs`, run their `--self-test` and show every line passes. ref-read's needs playwright like the probe runner.
 - after changing `tools/record.mjs`, run `node tools/record.mjs --self-test` and show every line passes. it needs playwright like the probe runner, and ffmpeg for the mp4 lines (without it, those check the webm fallback).
-- after changing an installer, run it into a throwaway home: `HOME=$(mktemp -d) bash install.sh --yes --dry-run`, then without `--dry-run`, twice.
+- after changing an installer, run `bash scripts/test-install.sh` (and `bash scripts/test-install.sh ps1` where `pwsh` exists). it installs into throwaway homes: fresh, an upgrade from old commits, with edits, uninstall. a new behavior gets a case there. keep `install.sh` and `install.ps1` doing the same thing.
+- `npm ci && npm test` runs the check, the installer cases and every tool self test. playwright is pinned in `package.json`.
+- a release: bump `VERSION` and `package.json`, add the `CHANGELOG.md` entry, tag `v<version>`.
+- `ln -sf ../../scripts/pre-commit .git/hooks/pre-commit` once per clone, so the check runs before every commit.
 
 ## the rules that hold here too
 

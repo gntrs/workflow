@@ -32,6 +32,7 @@
 
 ## sizes
 
+- images that leave the page (a readme, a social card) bring their own background and get checked at the size they actually show.
 - two widths of every raster (`hero.webp` 1774 and `hero-900.webp`, `-360` sizes for card art).
 - preload the hero image with `fetchpriority`. preloading tall decorative layers measured useless.
 

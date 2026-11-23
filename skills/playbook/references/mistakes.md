@@ -1,6 +1,6 @@
 # mistakes already made, do not repeat
 
-part of `playbook`. the one ledger. each of these cost real time. one line of what happened, one line of the rule. add to it when a mistake costs real time and would again; a lesson goes here, not into a second file. traps with a how-to live in `debugging.md` and `deploy.md` instead.
+part of `playbook`. the one ledger. each of these cost real time. one line of what happened, one line of the rule. updates replace this file, so a new mistake of your own goes into `~/.claude/RULES.local.md` as the same two lines, or into the repo's `.claude/CLAUDE.md` when it belongs to one repo. traps with a how-to live in `debugging.md` and `deploy.md`.
 
 1. **under-specced a builder model.**
    happened: a builder got a cheaper model to save quota, and the rework cost more.
@@ -24,7 +24,7 @@ part of `playbook`. the one ledger. each of these cost real time. one line of wh
 
 6. **a panel died when one model's credits ran out.**
    happened: every seat of a panel was on the same model.
-   rule: a second model family beside a primary lane, never the only one.
+   rule: on the major seats a second model family sits beside the strong model, never as the only one, per `cook`'s table.
 
 7. **a hand test pointed at the wrong app.**
    happened: the steps named `localhost:3000`, which another repo's dev server owned, and both steps 404ed.

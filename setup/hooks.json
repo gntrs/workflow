@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "__HOOK__",
+            "timeout": 300,
+            "statusMessage": "installing missing node_modules"
+          }
+        ]
+      }
+    ]
+  }
+}

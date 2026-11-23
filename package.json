@@ -1,0 +1,17 @@
+{
+  "name": "workflow",
+  "version": "1.1.0",
+  "private": true,
+  "description": "let him /cook: agent skills, rules and tools for Claude Code",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "check": "bash scripts/check.sh",
+    "test:install": "bash scripts/test-install.sh",
+    "test:tools": "node tools/brand-check.mjs --self-test && node tools/ref-check.mjs --self-test && node tools/probe-test.mjs --self-test && node tools/ref-read.mjs --self-test && node tools/record.mjs --self-test",
+    "test": "npm run check && npm run test:install && npm run test:tools"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

@@ -1,6 +1,6 @@
 ---
 name: brain
-description: Optional, only if the brain is installed. A second brain in an Obsidian style vault (`$VAULT`, default `~/vault`). Answers "what's open", "what did we decide", "what do i like", "what do we know about X" from the vault with [[links]] and sources, or files what the user says into the right typed folder. Invoke on /brain, "ask the brain", "what did we decide on", "remember this", "note this", "put this in the vault", "file this", or at the start of a session on a repo when the open items are not already in context.
+description: Optional second brain in the vault (`$VAULT`, default `~/vault`). Answers from it with [[links]], or files what the user says. Invoke on /brain, "what's open", "what did we decide", "remember this", "note this", "file this".
 ---
 
 # brain

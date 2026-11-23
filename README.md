@@ -18,7 +18,7 @@ paste this into your agent:
 set up https://github.com/gntrs/workflow
 ```
 
-it reads [SETUP.md](SETUP.md), asks six things once and fits it to your machine.
+it reads [SETUP.md](SETUP.md), asks seven things once and fits it to your machine.
 
 ### mac and linux
 
@@ -35,6 +35,17 @@ powershell -ExecutionPolicy Bypass -File $HOME\.claude\workflow\install.ps1 -Yes
 
 then restart your agent and `/cook` something real. installer flags are at the top of [install.sh](install.sh).
 
+### update
+
+run the installer again. it pulls the newest version first. what you did not touch is replaced, what you edited is kept and named, and nothing is deleted: old copies go to `~/.claude/workflow-backups/`. your own settings live in `~/.claude/RULES.local.md`, which it never writes twice. [what changed](CHANGELOG.md)
+
+```bash
+bash ~/.claude/workflow/install.sh --status      # what you have, what is behind, what you edited
+bash ~/.claude/workflow/install.sh --yes         # update
+```
+
+add `--with-permissions` and claude code itself asks before every push, merge, pr, release and deploy command. it matches how a command starts, so it is a second lock, not the only one.
+
 ## how it runs
 
 <picture>
@@ -49,10 +60,12 @@ it starts small and moves up a lane if the work fights back.
 | lane | looks like | runs |
 |---|---|---|
 | **microwave** (quick) | a typo, a color, a flag | main thread, no subagents |
-| **stove** (build) | one feature or bug you know | up to 2 helpers, the plan read cold first |
+| **stove** (build) | one feature or bug you know | helpers started together, split by files, reviewed as they land |
 | **slow cook** (/deep) | unfamiliar code, broke twice, "run till done" | research, a plan, your read, up to 4 agents |
 
-stove and slow cook print a `/goal` with a finish line you can check, so the session can't stop short.
+stove and slow cook print a `/goal` with a finish line you can check, so the session can't stop short. both review their own work with a fresh agent and fix what it finds. you never have to say "review it".
+
+not a lane, its own door: **the grill** (`/bbq`), for when it has to exist tonight.
 
 ## the commands
 
@@ -66,13 +79,17 @@ the one door. it picks the lane, the models and how many agents. [skills/cook](s
 
 for work that fights back, or runs while you sleep. research first, then a plan in a file you read, then a long run that survives a compact. [skills/deep](skills/deep/SKILL.md)
 
+### the grill (/bbq &lt;time&gt; &lt;thing&gt;)
+
+fast, hot, a bit burnt. for a hackathon, a prototype, a quick try. no questions, no plan to approve: it picks a time box, builds the demo path end to end first, fakes the slow parts behind one seam, splits builders by surface, reviews itself, and hands back what works, what is faked and the shortcuts it took. one yes at the end commits it and, if a host is logged in, puts up a preview link. nothing leaves before that. [skills/bbq](skills/bbq/SKILL.md)
+
 ### <img src="assets/poses/tray.png" width="96" align="absmiddle" alt="the chef carrying a tray"> serve (/ship)
 
 prints the exact text that would go public, every file, the real test output and your hand tests. then it waits. nothing leaves without your yes, not even a commit. [skills/ship](skills/ship/SKILL.md)
 
 ### <img src="assets/poses/taste.png" width="96" align="absmiddle" alt="the chef tasting from a spoon"> taste test (/review)
 
-a fresh agent reads the work, your exact words and your taste file, then says ship it, fix these, or bin it. [skills/review](skills/review/SKILL.md)
+a fresh agent reads the work, your exact words and your taste file, then says ship it, fix these, or bin it. cook runs it on its own, you only call it for a second look. [skills/review](skills/review/SKILL.md)
 
 ### <img src="assets/poses/thumbs.png" width="96" align="absmiddle" alt="the chef giving a thumbs up"> /status
 
@@ -110,7 +127,9 @@ these load on their own:
 
 ### why it's fast
 
-- **review early.** the plan is read before anyone builds, and each lane the moment it lands.
+- **no waiting in line.** everything independent starts in one message: explorers, builders, the plan's reviewer.
+- **it reviews itself, early.** the plan is read before anyone builds, each piece the moment it lands, and the findings are fixed without you asking.
+- **heavy tools by name only.** a design panel or a second review runs when the job calls for it, not on every feature and not on every phase of a big pr.
 - **parallel.** up to 4 agents, fewer on less ram. each owns its own files, so nothing collides.
 - **the coordinator doesn't build,** so its context stays small.
 - **a new ask gets its own lane,** never queued behind the batch.
@@ -137,7 +156,7 @@ every reaction you give goes into a taste file, word for word, dated, with what 
 
 ### the rules
 
-always on in [rules/RULES.md](rules/RULES.md), and they beat every skill: nothing leaves without your yes, git only with a yes, no ai authorship, every job ends with a hand test.
+always on in [rules/RULES.md](rules/RULES.md), and they beat every skill: nothing leaves without your yes, git only with a yes, no ai authorship, every job ends with a hand test. your own layer, `~/.claude/RULES.local.md`, beats them: your name, your models, your voice, your extra steps.
 
 ### the brain, optional
 

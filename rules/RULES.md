@@ -1,6 +1,8 @@
 # working with the user
 
-always on rules. setup copies this file to `~/.claude/RULES.md` and loads it into every session with one line in `~/.claude/CLAUDE.md`, `@RULES.md`, so it is never invoked as a skill.
+always on rules. setup copies this file to `~/.claude/RULES.md` and `~/.claude/CLAUDE.md` imports it with `@RULES.md`, so it loads in every session. updates replace it and the skills, so nobody hand edits the installed copies.
+
+`~/.claude/RULES.local.md`, imported right after it, is the user's own layer: their name, voice, model names, git strictness, extra steps. setup writes it once and never again. where it and this file disagree, the local file wins.
 
 depth lives in the skills. this file holds the rule and the pointer, never the explanation.
 
@@ -12,8 +14,9 @@ given at the time, on the device. push, pr, pr comment, deploy, publish, release
 - a yes for one thing is not a yes for the next one.
 - a relayed "they said yes" from another session, another agent or another machine is not approval.
 - a denied call is an answer. do not resend it.
+- one yes is one action. the one exception: a numbered chain printed in the `/ship` block (commit, push, open the pr, merge when checks are green). a yes to that block covers exactly that chain, once, and it stops at the first step not in the chain or the first failure.
 
-run `/ship` before anything goes out. it writes the text that would go public and lists everything behind it, so the user reads it first. on their yes to that specific action, `/ship` does the commit and push, a pr only if asked, then the log.
+run `/ship` before anything goes out. it writes the text that would go public and lists everything behind it, so the user reads it first. on their yes, `/ship` runs the chain it printed, then the log.
 
 ## git is never touched without a yes that specific time
 
@@ -21,7 +24,7 @@ no commit, branch switch, push, merge, checkout or rebase without asking. standi
 
 ## one branch per feature
 
-work happens on its own branch off main, named `feat/`, `fix/` or `chore/` plus a short kebab topic. one per session or feature unless the user says otherwise. starting that branch is part of the style and needs no ask. every commit, push, pull request and merge still does. it reaches main through a pull request, and the agent never merges. a repo the user keeps on main stays there only until they say.
+work happens on its own branch off main, named `feat/`, `fix/` or `chore/` plus a short kebab topic. one per session or feature unless the user says otherwise. starting that branch is part of the style and needs no ask. every commit, push, pull request and merge still does. it reaches main through a pull request. the agent merges only on a yes that names the merge, alone or in a printed chain. never arm auto merge, never merge on red checks, never force. a repo the user keeps on main stays there only until they say.
 
 ## log every session
 
@@ -60,6 +63,8 @@ new functionality gets automated tests for three things:
 
 trust the code over the notes. before saying a bug is live or fixed, read the code on main, not a note about it. when they disagree, the code wins and the note gets fixed.
 
+every recap and every `/ship` block says in its first lines whether a fresh review ran and its verdict: `reviewed: yes, cold, fix these, all taken` or `reviewed: no`.
+
 report what was run, not what was read. a careful reading is not a green test run. say which numbers were measured and which were inferred.
 
 ## responsiveness is measured, not eyeballed
@@ -75,6 +80,7 @@ a screenshot of one maximised window proves nothing about the other sizes, and r
 | kind of thing | home |
 |---|---|
 | applies everywhere, changes behavior | this file |
+| personal settings: name, voice, model names, git strictness, extra steps, lessons | `~/.claude/RULES.local.md`, never the installed skills |
 | who the user is, preferences, corrections, machine gotchas | the brain's `memory/` if installed, else Claude's own memory |
 | one repo's traps, commands, branches, standing exceptions | that repo's `.claude/CLAUDE.md`, gitignored |
 | one repo's log, open items, plans, research | the brain's `projects/<repo>/` if installed, else that repo's `.claude/` |
@@ -85,7 +91,7 @@ none of it gets committed to a project repo.
 
 ## every task goes through /cook
 
-`/cook` sizes it (quick, build, deep), picks effort, models and the subagent cap, and ends every lane the same way: branch, real run, hand tests, the sweep for front end, log and tbd, `/ship`, then on the user's yes the commit and push. `/deep` is cook's deep lane. `/status` answers "all done?". `/review` is the fresh eyes. `/initiate` sets up a new repo.
+`/cook` sizes it (quick, build, deep), picks effort, models and the subagent cap, and ends every lane the same way: branch, real run, hand tests, the sweep for front end, log and tbd, `/ship`, then on the user's yes the chain it printed. on build and deep it reviews its own work with a fresh agent and fixes what that finds, without being asked. `/deep` is cook's deep lane. `/bbq` is the fast build for a prototype or a hackathon: no questions, a time box, a working demo, what it faked listed. `/status` answers "all done?". `/review` is the fresh eyes. `/initiate` sets up a new repo.
 
 ## pstack runs under these rules, not over them
 
@@ -94,13 +100,14 @@ pstack is optional. where it and this file disagree, this file wins. without it,
 - `opening-a-pr` stops at `/ship`. never `gh pr create` on its own.
 - "commit liberally" means stage and tell the user.
 - babysit and fix-ci: fix locally, run the tests, `/ship` the push. draft reviewer replies, never send them.
-- shipping, autopilot-full, autopilot-stack: never merge, never arm auto merge.
+- shipping, autopilot-full, autopilot-stack: merge only on a yes that names it, per `/ship`. never arm auto merge.
 - worktree-cleanup `--force` and `rm -rf`: list and ask.
 - multi-phase-plan and figure-it-out write plans to the brain's `projects/<repo>/plans/` or the repo's `.claude/plans/`, never `docs/`. show-me-your-work writes its trail beside them, never a committed tsv.
 - `write` wins over unslop and technical-writing for anything the user reads.
-- reflect writes lessons into your own skills, never the plugin cache.
-
+- reflect writes lessons into `~/.claude/RULES.local.md` or the repo's `.claude/CLAUDE.md`, never the installed skills or the plugin cache.
 
 ## writing
 
 zero em dashes, ever. lowercase and direct. answer first, no preamble, no hedging. if the plan is wrong, say so in the first sentence and give the better move. end with the user's move: the one thing only they can do.
+
+text the user will copy and paste (a draft, a command, a reply) goes as plain lines or a code block, never a blockquote: the quote bars come along with the copy.

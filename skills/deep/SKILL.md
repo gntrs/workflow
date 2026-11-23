@@ -1,6 +1,6 @@
 ---
 name: deep
-description: Cook's deep lane and the method for hard problems and long autonomous runs, on pstack if installed. Read only research, a plan with a checkable exit predicate and an edge case register, a cold read of the plan, the user reads it, then a run drives to the predicate under RULES.md, verifies each builder as it lands, survives compaction and crashes through the tbd, and ends at /ship. Invoke when cook routes a task to deep, a swarm already failed, the repo is old or unfamiliar, the user steps away ("going to bed", "run until done", "/loop until X"), or says "deep", "go deep" or "rpi". Read playbook first.
+description: Cook's deep lane for hard problems and long autonomous runs, research, a plan with a checkable exit predicate, the user's go, a run to /ship. Invoke on "deep", "go deep", "run until done", "going to bed", a failed swarm, an unfamiliar repo.
 ---
 
 # deep
@@ -30,7 +30,7 @@ past about 40 percent of a context, quality drops. a bloated or apologising cont
 ## 1. research, read only
 
 - the repo's `.claude/CLAUDE.md`, the tbd, `AGENTS.md`, any known issues doc.
-- pstack `how` for how it works, `why` for why it is shaped so, `recall` for what was already done. without pstack: sonnet explorers with a narrow brief each. explorers are read only, inside cook's cap.
+- pstack `how` for how it works, `why` for why it is shaped so, `recall` for what was already done. without pstack: explorers on the strong model per cook's table, a narrow brief each. explorers are read only, inside cook's cap.
 - an empirical fork gets a quick prototype, not a question to the user.
 - output `<notes>/research/<date>-<topic>-research.md`: files and lines, the real flow, what was run for real, what could not be verified. no recommendations. where a tracker and the code disagree, that is a finding.
 
@@ -66,6 +66,8 @@ on yes, write one line into the repo's gitignored `.claude/CLAUDE.md`: `run gran
 
 without pstack: the same loop by hand, with `/loop` to wake.
 
+**fast, the same way the build lane is.** cook section 2 holds here: independent work (research explorers, phases with no order between them, a phase's review) starts in one message, the coordinator does not build the pieces, reports stay under 200 words, high effort sits on the plan and the final review. pstack's `autonomous-run`, `figure-it-out` and `orchestrate` drive the loop and hold the state. a phase builder is briefed directly, and never sent through pstack's full feature or bug-fix playbook: a design panel, a worktree and a pr flow per phase is what makes a big pr take a day.
+
 **builders, as a pipeline.** as many in flight as cook's cap allows. each brief names the files it owns, the slice of the predicate it must pass, the user's words verbatim and the report file to write. the moment one lands, the second review point: its tests, its slice, and a cold read of its diff against its brief that predicts the user's no, while the others still run. a pass frees the slot for the next phase; findings go back to that builder with the output. never wait for the batch to finish before reading the first one. the fast verify tier from cook runs before any preview.
 
 **the run loop.**
@@ -85,10 +87,10 @@ without pstack: the same loop by hand, with `/loop` to wake.
 3. Git is never touched without a yes that specific time, except local commits on <branch> under the run grant of <date>.
 4. No AI authorship anywhere that leaves the machine.
 5. At most <N> subagents in flight, N and the disk floor from cook's caps. An open RAM alert stops spawning.
-6. Never a single model family as the only lane.
+6. Every agent call sets its model, per cook's table. A second model family only beside the primary, never as the only lane.
 ```
 
-the coordinator never pushes, merges or lands on a remote. its gate items are mirrored into the tbd under `## the user, now`.
+the coordinator never pushes, merges or lands on a remote: that waits for `/ship` and a yes that names it. its gate items are mirrored into the tbd under `## the user, now`.
 
 ## 5. trail and state
 
@@ -102,7 +104,7 @@ the coordinator never pushes, merges or lands on a remote. its gate items are mi
 - the predicate checked on the real artifact, never a subagent's self report. when a note and the code disagree, the code wins and the note gets fixed.
 - the real app on the surface the user uses. phone means a phone size.
 - automated tests for the three questions in RULES.md where they earn it. the size sweep for front end.
-- the full verify tier from cook, then the third review point, before the user looks: `/review` with the artifact and the user's words, predicting their "no". on a contested design or any hard diff, pstack `interrogate` (read only, a second model family when available, per cook's table) first. builders fix findings in parallel on their own files. findings are fixed or argued, never applied blind.
+- the full verify tier from cook, then the third review point, before the user looks: `/review` with the artifact and the user's words, predicting their "no". on a contested design or any hard diff, pstack `interrogate` (read only, the final review row of cook's table, so the second family beside the strong model when set) first. builders fix findings in parallel on their own files. findings are fixed or argued, never applied blind.
 - say what was measured and what was inferred.
 
 ## 7. end at /ship

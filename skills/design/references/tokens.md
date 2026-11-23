@@ -73,6 +73,11 @@ in code the families are full stacks and sizes are fluid:
 | ease | `cubic-bezier(.22,1,.36,1)`, in-out `cubic-bezier(.65,0,.35,1)` |
 | durations | 180, 320, 560ms |
 
+## type and color, the rules
+
+- **type:** one face for everything read, one mono for small labels and numbers. display tight (-0.02 to -0.03em, line height about 1.05), body untracked, tabular nums on numbers. new work with no brand face uses the system stack. body 16 px, stepping to 17.5 and 18.5 on wide reading pages, near 15 px in dense app ui.
+- **color:** one vocabulary everywhere: ground, surface, ink, muted ink, accent, accent ink, error, hairline. a second hue needs a job (error, a data series), never a mood. the accent is rationed: the mark, the primary button, the selected state. hairlines are low alpha ink. muted ink at 4.5:1 or more, measured under the glyph ([verify.md](verify.md#contrast-measured-under-the-glyph)). charts: load the `dataviz` skill if present.
+
 ## rules that came with sets that shipped
 
 - type on a bright accent fill is accent ink, usually dark: a mid orange with white text sat near 2.3:1, with ink near 7.8:1. measure it.

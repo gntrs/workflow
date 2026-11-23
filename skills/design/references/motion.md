@@ -35,7 +35,8 @@
 - a drift is a css transform on a baked layer, gpu composited, reduced motion stops it.
 - pointer: hover answers, press answers, hover only on hover devices.
 - press on pointer down: `scale(.97)`.
-- one intro on load is fine (text rises, a product shot settles).
+- one intro on load is fine (text rises, a product shot settles). nothing else plays on its own.
+- loops stop off screen and in a hidden tab.
 - animate transform and opacity only.
 
 ## reduced motion, flat
