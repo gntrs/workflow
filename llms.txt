@@ -22,6 +22,7 @@ to install it for someone: `git clone --depth 1 https://github.com/gntrs/workflo
 - [status](skills/status/SKILL.md): done, pushed, merged, in five lines
 - [initiate](skills/initiate/SKILL.md): prepare a repo for agents
 - [design](skills/design/SKILL.md): front end method: only brand elements and real products, the element kit, the right or wrong board, the review loop, the size sweep
+- [palette](skills/palette/SKILL.md): four colors from one by the golden ratio, with the contrast between each pair measured
 - [write](skills/write/SKILL.md): prose for humans
 - [playbook](skills/playbook/SKILL.md): swarm shapes, debugging, research, mistake ledger
 - [brain](skills/brain/SKILL.md), [dream](skills/dream/SKILL.md): optional notes vault
