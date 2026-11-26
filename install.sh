@@ -72,7 +72,7 @@ MANIFEST="$CLAUDE_DIR/workflow-manifest"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 BACKUP="$CLAUDE_DIR/workflow-backups/$STAMP"
 VERSION="$(cat "$SRC/VERSION" 2>/dev/null || echo unknown)"
-OURS="bbq brain cook deep design dream initiate palette playbook review ship status write"
+OURS="bbq brain cook deep design dream initiate playbook review ship status write"
 did=() skipped=() moved=()
 NEWMAN="$(mktemp)"; trap 'rm -f "$NEWMAN"' EXIT
 

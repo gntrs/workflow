@@ -2,10 +2,6 @@
 
 newest first. the installer prints the version it had and the one it wrote.
 
-## 1.2.0
-
-- **`/palette`, four colors from one.** give it a hex and it returns an accent, a soft tint and a dark, each step made with the golden ratio: the hue turned by 137.5 degrees, the saturation cut by 61.8%, the brightness multiplied by 0.382. `skills/palette/palette.mjs` does the math and prints the text color for each one and the contrast between every pair, so you see which ones can carry text. the result is a proposal you pick from. `--css` and `--json` for the output.
-
 ## 1.1.1
 
 - the readme says what this is in one line under the hero, so the page has words before "install".
