@@ -131,4 +131,3 @@ never commit, push, open a pr, merge or deploy without the user's yes that speci
 | after a push they approved | any post push step the repo's `.claude/CLAUDE.md` names (a rebuild, a restart), from the pushed tree |
 | "is this the best outcome" | `/review` |
 | "hack it together", "quick prototype", a hackathon | `/bbq` |
-| "build a palette", "what goes with this color" | `/palette` |

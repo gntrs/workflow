@@ -105,10 +105,6 @@ once per repo. private notes in `.claude/` that never get committed. [skills/ini
 
 optional. one notes vault every repo writes to, tidied while you're away. [skills/brain](skills/brain/SKILL.md) · [skills/dream](skills/dream/SKILL.md)
 
-### /palette &lt;hex&gt;
-
-one color in, four out: an accent, a soft tint and a dark, each made with the golden ratio. it prints the contrast between every pair, so you see which can carry text. [skills/palette](skills/palette/SKILL.md)
-
 ### house rules
 
 these load on their own:
