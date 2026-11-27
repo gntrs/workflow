@@ -57,7 +57,7 @@ $Stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $Backup = Join-Path (Join-Path $Claude 'workflow-backups') $Stamp
 $VersionFile = Join-Path $Src 'VERSION'
 $Version = if (Test-Path $VersionFile) { (Get-Content $VersionFile -TotalCount 1 -Encoding UTF8).Trim() } else { 'unknown' }
-$Ours = 'bbq','brain','cook','deep','design','dream','initiate','playbook','review','ship','status','write'
+$Ours = 'bbq','brain','cook','deep','design','dream','initiate','palette','playbook','review','ship','status','write'
 $script:Did = @(); $script:Skipped = @(); $script:Moved = @()
 $script:NewMan = [ordered]@{}
 

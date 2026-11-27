@@ -21,7 +21,7 @@ check these yourself and say what you found, in one short block. do not ask abou
 - os and shell, total ram, free disk.
 - whether `git`, `gh`, `node`, `docker` (and whether a docker vm is running), `python3`, `bun` and the `claude` cli exist.
 - `git config --global user.name` and `user.email`. none set: add a question for the name and email their commits go out as.
-- what is already in `~/.claude/`: `CLAUDE.md`, `RULES.md`, `RULES.local.md`, `settings.json`, any skill folder with the same name as one of ours (`cook`, `bbq`, `deep`, `ship`, `status`, `review`, `initiate`, `design`, `write`, `playbook`, `brain`, `dream`), and whether pstack is already installed (`claude plugin list`).
+- what is already in `~/.claude/`: `CLAUDE.md`, `RULES.md`, `RULES.local.md`, `settings.json`, any skill folder with the same name as one of ours (`cook`, `bbq`, `deep`, `ship`, `status`, `review`, `initiate`, `design`, `palette`, `write`, `playbook`, `brain`, `dream`), and whether pstack is already installed (`claude plugin list`).
 - an earlier install: `bash ~/.claude/workflow/install.sh --status` says which version is there and which files they edited.
 
 then one message, numbered, each question with the default you will use if they say "you decide":
